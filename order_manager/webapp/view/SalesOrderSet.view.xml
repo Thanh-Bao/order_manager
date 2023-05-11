@@ -7,13 +7,18 @@
 >
     <Page id="page" title="{i18n>title}">
         <content />
+        <!-- items="{/SalesOrderSet}" -->
 
         <l:VerticalLayout
             width="100%">
             <l:content>
                 <Table id="idProductsTable"
-                    mode="SingleSelectMaster"
-                    items="{/SalesOrderSet}">
+                    growing="true"
+                    growingThreshold="25"
+                    growingScrollToLoad="true"
+                    sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
+                    items="{ path: '/SalesOrderSet', sorter: { path: 'BillingStatus', descending: true, group: '.getGroup' }, groupHeaderFactory: '.getGroupHeader'}"
+                >
                     <!-- <headerToolbar>
                         <OverflowToolbar>
                             <Title text="Products" level="H2" />
@@ -68,7 +73,7 @@
                         </Column>
                     </columns>
                     <items>
-                        <ColumnListItem vAlign="Middle">
+                        <ColumnListItem type="Navigation" vAlign="Middle">
                             <cells>
                                 <ObjectIdentifier title="{SalesOrderID}" />
                                 <Text text="{CustomerID} - {CustomerName}" />

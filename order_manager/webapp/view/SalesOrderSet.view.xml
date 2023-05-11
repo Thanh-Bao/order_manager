@@ -1,0 +1,88 @@
+<mvc:View
+    controllerName="ordermanager.controller.SalesOrderSet"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+>
+    <Page id="page" title="{i18n>title}">
+        <content />
+
+        <l:VerticalLayout
+            width="100%">
+            <l:content>
+                <Table id="idProductsTable"
+                    mode="SingleSelectMaster"
+                    items="{/SalesOrderSet}">
+                    <!-- <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Products" level="H2" />
+                            <ToolbarSpacer />
+                            <Button
+                                tooltip="Sort"
+                                icon="sap-icon://sort"
+                                press="handleSortButtonPressed" />
+                            <Button
+                                tooltip="Filter"
+                                icon="sap-icon://filter"
+                                press="handleFilterButtonPressed" />
+                            <Button
+                                tooltip="Group"
+                                icon="sap-icon://group-2"
+                                press="handleGroupButtonPressed" />
+                            <ToggleButton icon="sap-icon://menu"
+                                tooltip="Enable Custom Context Menu" press="onToggleContextMenu" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <infoToolbar>
+                        <OverflowToolbar id="vsdFilterBar" visible="false">
+                            <Text id="vsdFilterLabel" />
+                        </OverflowToolbar>
+                    </infoToolbar> -->
+                    <columns>
+                        <Column id="product" width="12em" headerMenu="columnHeaderMenu">
+                            <Text text="SalesOrderID" />
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Text text="Customer" />
+                        </Column>
+                        <Column width="8em" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                            <Text text="GrossAmount" />
+                        </Column>
+                        <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
+                            hAlign="Center">
+                            <Text text="NetAmount" />
+                        </Column>
+                        <!-- add more -->
+                        <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
+                            hAlign="Center">
+                            <Text text="TaxAmount" />
+                        </Column>
+                        <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
+                            hAlign="Center">
+                            <Text text="BillingStatus" />
+                        </Column>
+                        <!-- add more -->
+                        <Column width="8em" hAlign="End">
+                            <Text text="DeliveryStatus" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <ObjectIdentifier title="{SalesOrderID}" />
+                                <Text text="{CustomerID} - {CustomerName}" />
+                                <ObjectNumber number="{GrossAmount}" />
+                                <ObjectNumber number="{NetAmount}" />
+                                <ObjectNumber number="{TaxAmount}" />
+                                <Text text="{BillingStatus}" />
+                                <Text text="{DeliveryStatus}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </l:content>
+        </l:VerticalLayout>
+
+    </Page>
+</mvc:View>

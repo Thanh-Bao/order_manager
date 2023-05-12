@@ -13,16 +13,25 @@ sap.ui.define([
                 var oModel = new sap.ui.model.json.JSONModel({
                     EmployeeDetails: [
                         {
-                            firstName: "fddffd",
+                            Note: "fddffd",
                             lastName: "dfdf"
                         },
                         {
-                            firstName: "fddffd",
+                            fNote: "fddffd",
                             lastName: "dfdf"
                         }
                     ]
                 });
                 this.getView().setModel(oModel, "TableModel")
+            },
+
+            onAfterRendering: function () {
+                this.getOwnerComponent().getModel().read("/SalesOrderSet", {
+                    success: (data) => {
+                        console.log(data.results)
+                        this.getView().getModel('TableModel').setProperty(`/EmployeeDetails`, data.results);
+                    }
+                })
             },
 
             getGroup: function (oContext) {

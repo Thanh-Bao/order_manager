@@ -16,17 +16,23 @@ sap.ui.define([
             total: null
         }];
 
-        let totalSaleOrderSet = null;
+        let totalSaleOrderSet = 0;
 
         return BaseController.extend("ordermanager.controller.SalesOrderSet", {
             onInit: function () {
 
                 var oModel = new sap.ui.model.json.JSONModel({
-                    SalesOrderSet: []
+                    SalesOrderSet: [],
+                    isShowLoadMoreBtn: false,
+                    loadMoreTopUserSelect: 0
                 });
                 this.getView().setModel(oModel, "customSalesOrderSet")
             },
             onAfterRendering: function () {
+
+                // get "load more" default value
+                this.getView().getModel('customSalesOrderSet').setProperty(`/loadMoreTopUserSelect`, this.getView().getModel("config").getProperty("/SCREEN/SALES_ORDER_SET/PAGINATION_TOP_DEFAULT"));
+
                 // get list orders for main table
                 this.getView().getModel().read("/SalesOrderSet", {
                     sorters: [new Sorter("BillingStatus", true), new Sorter("SalesOrderID", true)],
@@ -36,7 +42,10 @@ sap.ui.define([
                     },
                     success: (data) => {
                         console.log(data)
+                        //update main table
                         this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, data.results);
+                        //show load more button
+                        this.getView().getModel('customSalesOrderSet').setProperty(`/isShowLoadMoreBtn`, true);
                     }
                 })
                 // count BillingStatus
@@ -57,10 +66,10 @@ sap.ui.define([
                 })
             },
             getGroup: function (oContext) {
-                return oContext.getProperty('BillingStatus');
+                return oContext.getProperty("BillingStatus");
             },
             getGroupHeader: function (oGroup) {
-                let count = null;
+                let count = 0;
                 countBillingStatus.forEach(o => {
                     if (o.status === oGroup.key) {
                         count = o.total;
@@ -74,7 +83,7 @@ sap.ui.define([
                 console.log(event.getParameters().value)
                 let oModel = this.getView()
                 this.getView().getModel().read("/SalesOrderSet", {
-                    filters: [new Filter("SalesOrderID", "EQ", '0500000001')],
+                    filters: [new Filter("SalesOrderID", "EQ", "0500000001")],
                     success: function (SalesOrderSet) {
                         console.log(SalesOrderSet)
                         let oTable = oModel.byId("tbSalesOrderSet");
@@ -89,6 +98,14 @@ sap.ui.define([
                 const oRouter = this.getOwnerComponent().getRouter();
                 console.log(SalesOrderID)
                 oRouter.navTo("SalesOrderLineItemSet");
+            },
+            onChangeLoadMoreItem: function (event) {
+                this.getView().getModel('customSalesOrderSet').setProperty("/loadMoreTopUserSelect", event.getParameters().value);
+            },
+
+            onPressLoadMoreBtn: function () {
+                console.log(this.getView().getModel('customSalesOrderSet').getProperty("/loadMoreTopUserSelect"));
             }
+
         });
     });

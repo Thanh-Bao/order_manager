@@ -59,12 +59,12 @@
                             <Text text="GrossAmount" />
                         </Column>
                         <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
-                            hAlign="Center">
+                            hAlign="End">
                             <Text text="NetAmount" />
                         </Column>
                         <!-- add more -->
                         <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
-                            hAlign="Center">
+                            hAlign="End">
                             <Text text="TaxAmount" />
                         </Column>
                         <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
@@ -72,7 +72,7 @@
                             <Text text="BillingStatus" />
                         </Column>
                         <!-- add more -->
-                        <Column width="8em" hAlign="End">
+                        <Column width="8em" hAlign="Center">
                             <Text text="DeliveryStatus" />
                         </Column>
                     </columns>
@@ -87,15 +87,26 @@
                                 <ObjectNumber number="{customSalesOrderSet>GrossAmount}" />
                                 <ObjectNumber number="{customSalesOrderSet>NetAmount}" />
                                 <ObjectNumber number="{customSalesOrderSet>TaxAmount}" />
-                                <Text text="{customSalesOrderSet>BillingStatus}" />
-                                <Text text="{customSalesOrderSet>DeliveryStatus}" />
+                                <Button
+                                    text="{customSalesOrderSet>BillingStatus}"
+                                    width="50px"
+                                    type="{= ${customSalesOrderSet>BillingStatus} === 'P' ? 'Attention' : 'Reject' }"
+                                    tooltip="{= ${customSalesOrderSet>BillingStatus} === 'P' ? 'Pending' : 'Orther' }"
+                                    id="myButton"
+                                />
+                                <Button
+                                    text="{customSalesOrderSet>DeliveryStatus}"
+                                    type="{= ${customSalesOrderSet>DeliveryStatus} === 'D' ? 'Accept' : 'Attention' }"
+                                    tooltip="{= ${customSalesOrderSet>DeliveryStatus} === 'D' ? 'Delivered' : 'Initial' }"
+                                    width="50px"
+                                />
                             </cells>
                         </ColumnListItem>
                     </items>
                 </Table>
             </l:content>
         </l:VerticalLayout>
-        <Panel visible="true">
+        <Panel visible="{customSalesOrderSet>/isShowLoadMoreBtn}">
             <FlexBox
                 height="100px"
                 alignItems="Center"
@@ -103,10 +114,13 @@
                 <Button
                     text="Load more"
                     icon="sap-icon://add"
-                    type="Emphasized" />
+                    type="Emphasized"
+                    press=".onPressLoadMoreBtn"
+                />
                 <Select
                     forceSelection="true"
                     class="sapUiSmallMarginBeginEnd"
+                    change=".onChangeLoadMoreItem"
                 >
                     <core:Item text="{config>/SCREEN/SALES_ORDER_SET/PAGINATION_TOP_DEFAULT}" />
                     <core:Item text="200" />
@@ -114,9 +128,7 @@
                     <core:Item text="3000" />
                     <core:Item text="5000" />
                 </Select>
-
                 <Text text="lines" />
-
             </FlexBox>
         </Panel>
     </Page>

@@ -11,3 +11,12 @@ https://community.neptune-software.com/topics/phonegap/posts/infinite-scroll-in-
 
 #Table sticky header
 https://stackoverflow.com/questions/37809148/sap-m-table-vertical-scrolling-with-fixed-header
+
+#Sort table
+
+https://answers.sap.com/questions/470744/sorter-in-odatamodel-doesn%27t-work.html
+
+Odata
+
+Odata query
+https://blogs.sap.com/2019/10/21/implemention-of-odata-queries-in-sap-ui5-app/

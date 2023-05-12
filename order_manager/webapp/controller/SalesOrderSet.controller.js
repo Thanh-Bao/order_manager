@@ -1,63 +1,68 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "ordermanager/controller/BaseController",
     "sap/ui/model/Filter",
+    "sap/ui/model/Sorter",
 ],
-    /**
-     * @param {typeof sap.ui.core.mvc.Controller} Controller
-     */
-    function (Controller, Filter) {
-        "use strict";
 
-        return Controller.extend("ordermanager.controller.SalesOrderSet", {
+    function (BaseController, Filter, Sorter) {
+        "use strict";
+        let countBillingStatus = [{
+            status: 'P',
+            total: null
+        },
+        {
+            status: '',
+            total: null
+        }];
+
+        let totalSaleOrderSet = null;
+
+        return BaseController.extend("ordermanager.controller.SalesOrderSet", {
             onInit: function () {
                 var oModel = new sap.ui.model.json.JSONModel({
-                    EmployeeDetails: [
-                        {
-                            Note: "fddffd",
-                            lastName: "dfdf"
-                        },
-                        {
-                            fNote: "fddffd",
-                            lastName: "dfdf"
-                        }
-                    ]
+                    SalesOrderSet: []
                 });
-                this.getView().setModel(oModel, "TableModel")
+                this.getView().setModel(oModel, "customSalesOrderSet")
             },
-
             onAfterRendering: function () {
-                this.getOwnerComponent().getModel().read("/SalesOrderSet", {
+                // get list orders for main table
+                this.getView().getModel().read("/SalesOrderSet", {
+                    sorters: [new Sorter("SalesOrderID", true)],
                     success: (data) => {
-                        console.log(data.results)
-                        this.getView().getModel('TableModel').setProperty(`/EmployeeDetails`, data.results);
+                        this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, data.results);
+                    }
+                })
+                // count BillingStatus
+                countBillingStatus.map(item => {
+                    this.getView().getModel().read("/SalesOrderSet/$count", {
+                        filters: [new Filter("BillingStatus", "EQ", item.status)],
+                        success: count => {
+                            item.total = count;
+                        }
+                    })
+                })
+
+                // count SaleOrderSet
+                this.getView().getModel().read("/SalesOrderSet/$count", {
+                    success: count => {
+                        totalSaleOrderSet = count
                     }
                 })
             },
-
             getGroup: function (oContext) {
                 return oContext.getProperty('BillingStatus');
             },
-
             getGroupHeader: function (oGroup) {
-                let groupCount = 0;
-                // const oPromise = await new Promise(resolve => {
-                //     this.getView().getModel().read('/SalesOrderSet/$count', {
-                //         success: function (count) {
-                //             resolve(count)
-                //         },
-                //         error: function (error) {
-                //             console.log(error);
-                //         }
-                //     })
-                // });
-
-                // console.log(oPromise)
-
+                let count = null;
+                countBillingStatus.forEach(o => {
+                    if (o.status === oGroup.key) {
+                        count = o.total;
+                    }
+                });
                 return new sap.m.GroupHeaderListItem({
-                    title: `${oGroup.key} (${groupCount})`
+                    title: `${oGroup.key} (${this.formatNumber(count)}) / total ${this.formatNumber(totalSaleOrderSet)}`
                 });
             },
-
             searchTyping: function (event) {
                 console.log(event.getParameters().value)
                 let oModel = this.getView()
@@ -73,7 +78,6 @@ sap.ui.define([
                     }
                 })
             },
-
             onPressSalesOrderLineItemSet: function (SalesOrderID) {
                 const oRouter = this.getOwnerComponent().getRouter();
                 console.log(SalesOrderID)

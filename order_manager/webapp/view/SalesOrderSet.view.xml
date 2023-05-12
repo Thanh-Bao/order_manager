@@ -8,21 +8,83 @@
 >
     <Page id="page" title="{i18n>title}">
         <content />
-
-        <Table items="{TableModel>/EmployeeDetails}">
-            <columns>
-                <Column>
-                    <Text text="dfdf"></Text>
-                </Column>
-            </columns>
-            <items>
-                <ColumnListItem>
-                    <cells>
-                        <Text text="{TableModel>Note}"></Text>
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
-
+        <Panel>
+            <FlexBox
+                height="100px"
+                alignItems="Center"
+                justifyContent="Center">
+                <Text text="Search by:  " />
+                <Select
+                    forceSelection="true"
+                    class="sapUiSmallMarginBeginEnd"
+                >
+                    <core:Item text="Sale Order Number" />
+                    <core:Item text="Customer" />
+                    <core:Item text="Product" />
+                </Select>
+                <Input
+                    id="specification_id"
+                    liveChange=".searchTyping"
+                />
+                <Button text="OK" type="Emphasized" class="sapUiSmallMarginBegin" />
+            </FlexBox>
+        </Panel>
+        <l:VerticalLayout
+            width="100%">
+            <l:content>
+                <Table id="tbSalesOrderSet"
+                    growing="true"
+                    growingThreshold="25"
+                    growingScrollToLoad="true"
+                    sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
+                    items="{ path: 'customSalesOrderSet>/SalesOrderSet', sorter: { path: 'BillingStatus', descending: true, group: '.getGroup' }, groupHeaderFactory: '.getGroupHeader'}"
+                >
+                    <columns>
+                        <Column id="product" width="12em" headerMenu="columnHeaderMenu">
+                            <Text text="SalesOrderID" />
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Text text="Customer" />
+                        </Column>
+                        <Column width="8em" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                            <Text text="GrossAmount" />
+                        </Column>
+                        <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
+                            hAlign="Center">
+                            <Text text="NetAmount" />
+                        </Column>
+                        <!-- add more -->
+                        <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
+                            hAlign="Center">
+                            <Text text="TaxAmount" />
+                        </Column>
+                        <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
+                            hAlign="Center">
+                            <Text text="BillingStatus" />
+                        </Column>
+                        <!-- add more -->
+                        <Column width="8em" hAlign="End">
+                            <Text text="DeliveryStatus" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem press=".onPressSalesOrderLineItemSet(${SalesOrderID})"
+                            type="Navigation"
+                            vAlign="Middle">
+                            <cells>
+                                <ObjectIdentifier title="{customSalesOrderSet>SalesOrderID}" />
+                                <Text
+                                    text="{customSalesOrderSet>CustomerID} - {customSalesOrderSet>CustomerName}" />
+                                <ObjectNumber number="{customSalesOrderSet>GrossAmount}" />
+                                <ObjectNumber number="{customSalesOrderSet>NetAmount}" />
+                                <ObjectNumber number="{customSalesOrderSet>TaxAmount}" />
+                                <Text text="{customSalesOrderSet>BillingStatus}" />
+                                <Text text="{customSalesOrderSet>DeliveryStatus}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </l:content>
+        </l:VerticalLayout>
     </Page>
 </mvc:View>

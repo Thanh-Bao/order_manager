@@ -27,7 +27,7 @@
                     liveChange=".searchTyping"
                 />
                 <Button
-                    text="OK"
+                    text="apply"
                     icon="sap-icon://search"
                     type="Emphasized"
                     class="sapUiSmallMarginBegin" />

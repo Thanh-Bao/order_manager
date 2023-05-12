@@ -26,7 +26,24 @@ sap.ui.define([
                     isShowLoadMoreBtn: false,
                     loadMoreTopUserSelect: 0
                 });
-                this.getView().setModel(oModel, "customSalesOrderSet")
+                this.getView().setModel(oModel, "customSalesOrderSet");
+
+                // count BillingStatus
+                countBillingStatus.map(item => {
+                    this.getOwnerComponent().getModel().read("/SalesOrderSet/$count", {
+                        filters: [new Filter("BillingStatus", "EQ", item.status)],
+                        success: count => {
+                            item.total = count;
+                        }
+                    })
+                })
+
+                // count SaleOrderSet
+                this.getOwnerComponent().getModel().read("/SalesOrderSet/$count", {
+                    success: count => {
+                        totalSaleOrderSet = count
+                    }
+                })
             },
             onAfterRendering: function () {
 
@@ -41,27 +58,10 @@ sap.ui.define([
                         $top: this.getView().getModel("config").getProperty("/SCREEN/SALES_ORDER_SET/PAGINATION_TOP_DEFAULT")
                     },
                     success: (data) => {
-                        console.log(data)
                         //update main table
                         this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, data.results);
                         //show load more button
                         this.getView().getModel('customSalesOrderSet').setProperty(`/isShowLoadMoreBtn`, true);
-                    }
-                })
-                // count BillingStatus
-                countBillingStatus.map(item => {
-                    this.getView().getModel().read("/SalesOrderSet/$count", {
-                        filters: [new Filter("BillingStatus", "EQ", item.status)],
-                        success: count => {
-                            item.total = count;
-                        }
-                    })
-                })
-
-                // count SaleOrderSet
-                this.getView().getModel().read("/SalesOrderSet/$count", {
-                    success: count => {
-                        totalSaleOrderSet = count
                     }
                 })
             },
@@ -100,7 +100,8 @@ sap.ui.define([
                 oRouter.navTo("SalesOrderLineItemSet");
             },
             onChangeLoadMoreItem: function (event) {
-                this.getView().getModel('customSalesOrderSet').setProperty("/loadMoreTopUserSelect", event.getParameters().value);
+                console.log(event.getParameters().selectedItem.getText())
+                this.getView().getModel('customSalesOrderSet').setProperty("/loadMoreTopUserSelect", event.getParameters().selectedItem.getText());
             },
 
             onPressLoadMoreBtn: function () {

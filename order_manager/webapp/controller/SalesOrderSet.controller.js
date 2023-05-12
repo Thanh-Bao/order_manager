@@ -51,6 +51,12 @@ sap.ui.define([
                         console.log(error);
                     }
                 })
+            },
+
+            onPressSalesOrderLineItemSet: function (SalesOrderID) {
+                const oRouter = this.getOwnerComponent().getRouter();
+                console.log(SalesOrderID)
+                oRouter.navTo("SalesOrderLineItemSet");
             }
         });
     });

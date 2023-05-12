@@ -101,6 +101,11 @@
           "target": [
             "TargetSalesOrderSet"
           ]
+        },
+        {
+          "name": "SalesOrderLineItemSet",
+          "pattern": "SalesOrderLineItemSet",
+          "target": "SalesOrderLineItemSet"
         }
       ],
       "targets": {
@@ -110,6 +115,10 @@
           "clearControlAggregation": false,
           "viewId": "SalesOrderSet",
           "viewName": "SalesOrderSet"
+        },
+        "SalesOrderLineItemSet": {
+          "viewId": "SalesOrderLineItemSet",
+          "viewName": "SalesOrderLineItemSet"
         }
       }
     },

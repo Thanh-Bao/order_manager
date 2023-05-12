@@ -96,7 +96,9 @@
                         </Column>
                     </columns>
                     <items>
-                        <ColumnListItem type="Navigation" vAlign="Middle">
+                        <ColumnListItem press=".onPressSalesOrderLineItemSet(${SalesOrderID})"
+                            type="Navigation"
+                            vAlign="Middle">
                             <cells>
                                 <ObjectIdentifier title="{SalesOrderID}" />
                                 <Text text="{CustomerID} - {CustomerName}" />

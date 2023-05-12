@@ -4,15 +4,38 @@
     displayBlock="true"
     xmlns="sap.m"
     xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
 >
     <Page id="page" title="{i18n>title}">
         <content />
-        <!-- items="{/SalesOrderSet}" -->
+
+
+        <Panel>
+            <FlexBox
+                height="100px"
+                alignItems="Center"
+                justifyContent="Center">
+                <Text text="Search by:  " />
+                <Select
+                    forceSelection="true"
+                    class="sapUiSmallMarginBeginEnd"
+                >
+                    <core:Item text="Sale Order Number" />
+                    <core:Item text="Customer" />
+                    <core:Item text="Product" />
+                </Select>
+                <Input
+                    id="specification_id"
+                    liveChange=".searchTyping"
+                />
+                <Button text="OK" type="Emphasized" class="sapUiSmallMarginBegin" />
+            </FlexBox>
+        </Panel>
 
         <l:VerticalLayout
             width="100%">
             <l:content>
-                <Table id="idProductsTable"
+                <Table id="tbSalesOrderSet"
                     growing="true"
                     growingThreshold="25"
                     growingScrollToLoad="true"

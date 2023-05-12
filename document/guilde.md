@@ -10,5 +10,4 @@ growingScrollToLoad="true"
 https://community.neptune-software.com/topics/phonegap/posts/infinite-scroll-in-list-to-load-more-data
 
 #Table sticky header
-
 https://stackoverflow.com/questions/37809148/sap-m-table-vertical-scrolling-with-fixed-header

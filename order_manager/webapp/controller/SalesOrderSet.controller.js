@@ -6,6 +6,7 @@ sap.ui.define([
 
     function (BaseController, Filter, Sorter) {
         "use strict";
+
         let countBillingStatus = [{
             status: 'P',
             total: null
@@ -19,6 +20,7 @@ sap.ui.define([
 
         return BaseController.extend("ordermanager.controller.SalesOrderSet", {
             onInit: function () {
+
                 var oModel = new sap.ui.model.json.JSONModel({
                     SalesOrderSet: []
                 });
@@ -27,8 +29,13 @@ sap.ui.define([
             onAfterRendering: function () {
                 // get list orders for main table
                 this.getView().getModel().read("/SalesOrderSet", {
-                    sorters: [new Sorter("SalesOrderID", true)],
+                    sorters: [new Sorter("BillingStatus", true), new Sorter("SalesOrderID", true)],
+                    urlParameters: {
+                        $skip: this.getView().getModel("config").getProperty("/SCREEN/SALES_ORDER_SET/PAGINATION_SKIP_BEGIN"),
+                        $top: this.getView().getModel("config").getProperty("/SCREEN/SALES_ORDER_SET/PAGINATION_TOP_DEFAULT")
+                    },
                     success: (data) => {
+                        console.log(data)
                         this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, data.results);
                     }
                 })
@@ -60,7 +67,7 @@ sap.ui.define([
                     }
                 });
                 return new sap.m.GroupHeaderListItem({
-                    title: `${oGroup.key} (${this.formatNumber(count)}) / total ${this.formatNumber(totalSaleOrderSet)}`
+                    title: `${oGroup.key === '' ? "Billing Status empty" : oGroup.key} (${this.formatNumber(count)}) / total ${this.formatNumber(totalSaleOrderSet)}`
                 });
             },
             searchTyping: function (event) {

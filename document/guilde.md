@@ -20,3 +20,8 @@ Odata
 
 Odata query
 https://blogs.sap.com/2019/10/21/implemention-of-odata-queries-in-sap-ui5-app/
+
+#BINDING
+
+#Binding static JSON file to app
+https://github.com/Thanh-Bao/Fiori_hello_world/tree/cb83d5f69bc281491d78ddae3d35608d0ca01336/webapp

@@ -1,0 +1,8 @@
+{
+    "SCREEN": {
+        "SALES_ORDER_SET": {
+            "PAGINATION_SKIP_BEGIN": "0",
+            "PAGINATION_TOP_DEFAULT": "50"
+        }
+    }
+}

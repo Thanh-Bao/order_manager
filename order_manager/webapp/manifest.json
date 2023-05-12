@@ -75,6 +75,10 @@
         "settings": {
           "useBatch": false
         }
+      },
+      "config": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/config.json"
       }
     },
     "resources": {

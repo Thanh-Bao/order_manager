@@ -26,7 +26,16 @@
                     id="specification_id"
                     liveChange=".searchTyping"
                 />
-                <Button text="OK" type="Emphasized" class="sapUiSmallMarginBegin" />
+                <Button
+                    text="OK"
+                    icon="sap-icon://search"
+                    type="Emphasized"
+                    class="sapUiSmallMarginBegin" />
+                <Button
+                    text="reset table"
+                    icon="sap-icon://reset"
+                    type="Transparent"
+                    class="sapUiSmallMarginBegin" />
             </FlexBox>
         </Panel>
         <l:VerticalLayout
@@ -86,5 +95,29 @@
                 </Table>
             </l:content>
         </l:VerticalLayout>
+        <Panel visible="true">
+            <FlexBox
+                height="100px"
+                alignItems="Center"
+                justifyContent="Center">
+                <Button
+                    text="Load more"
+                    icon="sap-icon://add"
+                    type="Emphasized" />
+                <Select
+                    forceSelection="true"
+                    class="sapUiSmallMarginBeginEnd"
+                >
+                    <core:Item text="{config>/SCREEN/SALES_ORDER_SET/PAGINATION_TOP_DEFAULT}" />
+                    <core:Item text="200" />
+                    <core:Item text="800" />
+                    <core:Item text="3000" />
+                    <core:Item text="5000" />
+                </Select>
+
+                <Text text="lines" />
+
+            </FlexBox>
+        </Panel>
     </Page>
 </mvc:View>

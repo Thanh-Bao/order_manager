@@ -10,7 +10,19 @@ sap.ui.define([
 
         return Controller.extend("ordermanager.controller.SalesOrderSet", {
             onInit: function () {
-
+                var oModel = new sap.ui.model.json.JSONModel({
+                    EmployeeDetails: [
+                        {
+                            firstName: "fddffd",
+                            lastName: "dfdf"
+                        },
+                        {
+                            firstName: "fddffd",
+                            lastName: "dfdf"
+                        }
+                    ]
+                });
+                this.getView().setModel(oModel, "TableModel")
             },
 
             getGroup: function (oContext) {

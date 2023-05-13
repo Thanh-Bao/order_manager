@@ -114,12 +114,15 @@
                 height="100px"
                 alignItems="Center"
                 justifyContent="Center">
+                <Text
+                    class="sapUiSmallMarginEnd"
+                    text="[  {customSalesOrderSet>/totalCurrentTableLine} / {customSalesOrderSet>/totalTableLine} ]" />
                 <Button
                     text="Load more"
                     icon="sap-icon://add"
                     type="Emphasized"
                     press=".onPressLoadMoreBtn"
-                    enabled="{!customSalesOrderSet>/loadMoreIndicator}"
+                    enabled="{= ${customSalesOrderSet>/loadMoreIndicator} ? false : true }"
                 />
                 <Select
                     forceSelection="true"

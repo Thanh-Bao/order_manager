@@ -7,6 +7,8 @@ sap.ui.define([
     function (BaseController, Filter, Sorter) {
         "use strict";
 
+        const DEFAULT_LOAD_MORE_STEP = 50;
+
         let countBillingStatus = [{
             status: 'P',
             total: null
@@ -15,9 +17,10 @@ sap.ui.define([
             status: '',
             total: null
         }];
-
         let totalSaleOrderSet = 0;
-        const DEFAULT_LOAD_MORE_STEP = 50;
+        let current_skip = 0;
+        let loadMoreTopUserSelect = DEFAULT_LOAD_MORE_STEP;
+        let filtersQueryString = null;
 
         return BaseController.extend("ordermanager.controller.SalesOrderSet", {
             onInit: function () {
@@ -27,8 +30,8 @@ sap.ui.define([
                     SalesOrderSet: [],
                     isShowLoadMoreBtn: false,
                     loadMoreIndicator: false,
-                    current_skip: 0,
-                    loadMoreTopUserSelect: DEFAULT_LOAD_MORE_STEP,
+                    totalTableLine: 0,
+                    totalCurrentTableLine: 0
                 });
                 this.getView().setModel(oModel, "customSalesOrderSet");
 
@@ -59,13 +62,16 @@ sap.ui.define([
                         $skip: skip,
                         $top: DEFAULT_LOAD_MORE_STEP
                     },
-                    success: (data) => {
+                    success: ({ results }) => {
                         //update main table
                         this.getView().byId("tbSalesOrderSet")?.setBusy(false);
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, data.results);
+                        this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, results);
                         //show load more button
                         this.getView().getModel('customSalesOrderSet').setProperty(`/isShowLoadMoreBtn`, true);
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/current_skip`, DEFAULT_LOAD_MORE_STEP);
+                        // count table line
+                        this.getView().getModel('customSalesOrderSet').setProperty(`/totalTableLine`, this.formatNumber(totalSaleOrderSet));
+                        this.getView().getModel('customSalesOrderSet').setProperty(`/totalCurrentTableLine`, this.formatNumber(results.length));
+                        current_skip = DEFAULT_LOAD_MORE_STEP;
                     }
                 })
             },
@@ -104,27 +110,27 @@ sap.ui.define([
                 oRouter.navTo("SalesOrderLineItemSet");
             },
             onChangeLoadMoreItem: function (event) {
-                this.getView().getModel('customSalesOrderSet').setProperty("/loadMoreTopUserSelect", Number(event.getParameters().selectedItem.getText()));
+                loadMoreTopUserSelect = Number(event.getParameters().selectedItem.getText());
             },
 
             onPressLoadMoreBtn: function () {
                 this.getView().getModel('customSalesOrderSet').setProperty("/loadMoreIndicator", true);
-                console.log(this.getView().getModel('customSalesOrderSet').getProperty("/loadMoreTopUserSelect"));
 
-                const current_skip = this.getView().getModel('customSalesOrderSet').getProperty("/current_skip");
-                const loadMoreTopUserSelect = this.getView().getModel('customSalesOrderSet').getProperty("/loadMoreTopUserSelect");
                 this.getView().getModel().read("/SalesOrderSet", {
                     sorters: [new Sorter("BillingStatus", true), new Sorter("SalesOrderID", true)],
                     urlParameters: {
                         $skip: current_skip,
                         $top: loadMoreTopUserSelect
                     },
-                    success: (data) => {
+                    filters: filtersQueryString,
+                    success: ({ results }) => {
                         this.getView().getModel('customSalesOrderSet').setProperty("/loadMoreIndicator", false);
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/current_skip`, current_skip + loadMoreTopUserSelect);
                         //update main table
                         const SalesOrderSet = this.getView().getModel('customSalesOrderSet').getProperty(`/SalesOrderSet`);
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, [...SalesOrderSet, ...data.results]);
+                        this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, [...SalesOrderSet, ...results]);
+                        this.getView().getModel('customSalesOrderSet').setProperty(`/totalCurrentTableLine`, this.formatNumber(current_skip + results.length));
+
+                        current_skip += loadMoreTopUserSelect;
                         //show load more button
                         // this.getView().getModel('customSalesOrderSet').setProperty(`/isShowLoadMoreBtn`, true);
                     }

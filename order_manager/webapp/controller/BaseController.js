@@ -4,7 +4,12 @@ sap.ui.define([
     "use strict";
     return Controller.extend("ordermanager.controller.BaseController", {
         formatNumber: number => {
-            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            try {
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+            } catch {
+                return number;
+            }
+
         }
     });
 });

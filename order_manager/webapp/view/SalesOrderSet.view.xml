@@ -42,6 +42,7 @@
             width="100%">
             <l:content>
                 <Table id="tbSalesOrderSet"
+                    showNoData="false"
                     growing="true"
                     growingThreshold="25"
                     growingScrollToLoad="true"
@@ -106,7 +107,17 @@
                 </Table>
             </l:content>
         </l:VerticalLayout>
+
+
         <Panel visible="{customSalesOrderSet>/isShowLoadMoreBtn}">
+            <FlexBox
+                height="100px"
+                alignItems="Center"
+                justifyContent="Center"
+                visible="{customSalesOrderSet>/loadMoreIndicator}"
+            >
+                <BusyIndicator size="2em" />
+            </FlexBox>
             <FlexBox
                 height="100px"
                 alignItems="Center"
@@ -116,6 +127,7 @@
                     icon="sap-icon://add"
                     type="Emphasized"
                     press=".onPressLoadMoreBtn"
+                    enabled="{!customSalesOrderSet>/loadMoreIndicator}"
                 />
                 <Select
                     forceSelection="true"

@@ -21,7 +21,7 @@ sap.ui.define([
 
         return BaseController.extend("ordermanager.controller.SalesOrderSet", {
             onInit: function () {
-                this.getView().byId("tbSalesOrderSet").setBusy(true);
+                this.getView().byId("tbSalesOrderSet")?.setBusy(true);
 
                 var oModel = new sap.ui.model.json.JSONModel({
                     SalesOrderSet: [],
@@ -61,7 +61,7 @@ sap.ui.define([
                     },
                     success: (data) => {
                         //update main table
-                        this.getView().byId("tbSalesOrderSet").setBusy(false);
+                        this.getView().byId("tbSalesOrderSet")?.setBusy(false);
                         this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, data.results);
                         //show load more button
                         this.getView().getModel('customSalesOrderSet').setProperty(`/isShowLoadMoreBtn`, true);

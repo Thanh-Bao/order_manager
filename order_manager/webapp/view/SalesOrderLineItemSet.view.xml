@@ -1,15 +1,28 @@
 <mvc:View
-    controllerName="ordermanager.controller.SalesOrderSet"
+    controllerName="ordermanager.controller.SalesOrderLineItemSet"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
     xmlns:l="sap.ui.layout"
     xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
 >
-    <Page id="page" title="{i18n>title}">
+    <Page id="page123" title="{i18n>title}">
         <content />
 
         <Text text="hello" />
+
+        <form:SimpleForm
+            title="Selection"
+            editable="true"
+            layout="ResponsiveLayout"
+        >
+            <MultiInput id="idInput" width="400px" showValueHelp="true"
+                valueHelpRequest=".handleValueHelp">
+
+            </MultiInput>
+
+        </form:SimpleForm>
 
     </Page>
 </mvc:View>

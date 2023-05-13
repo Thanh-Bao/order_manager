@@ -18,8 +18,13 @@
                     class="sapUiSmallMarginEnd"
                 />
 
-                <MultiInput id="idInput" width="400px" showValueHelp="true"
-                    valueHelpRequest=".handleValueHelp" />
+                <MultiInput
+                    id="multiInputSearch"
+                    width="600px"
+                    tokenUpdate=".onTokenUpdate"
+                    showValueHelp="true"
+                    valueHelpRequest=".handleValueHelp"
+                />
 
                 <Button
                     icon="sap-icon://delete"
@@ -30,6 +35,7 @@
                     text="apply"
                     icon="sap-icon://search"
                     type="Emphasized"
+                    press=".applySearch"
                     class="sapUiSmallMarginBegin" />
                 <Button
                     text="reset table"
@@ -47,8 +53,12 @@
                     growingThreshold="25"
                     growingScrollToLoad="true"
                     sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
-                    items="{ path: 'customSalesOrderSet>/SalesOrderSet', sorter: { path: 'BillingStatus', descending: true, group: '.getGroup' }, groupHeaderFactory: '.getGroupHeader'}"
-                >
+                    items="{ path: 'customSalesOrderSet>/SalesOrderSet', 
+                             sorter: { path: 'BillingStatus', 
+                                       descending: true, 
+                                       group: '.getGroup' }, 
+                             groupHeaderFactory: '.getGroupHeader'
+                            }">
                     <columns>
                         <Column id="product" width="12em" headerMenu="columnHeaderMenu">
                             <Text text="SalesOrderID" />

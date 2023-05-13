@@ -2,14 +2,17 @@ sap.ui.define([
     "ordermanager/controller/BaseController",
     "sap/ui/model/Filter",
     "sap/ui/model/Sorter",
+    "sap/m/MessageBox",
+    'sap/m/Token',
+    "sap/ui/model/FilterOperator"
 ],
 
-    function (BaseController, Filter, Sorter) {
+    function (BaseController, Filter, Sorter, MessageBox, Token, FilterOperator) {
         "use strict";
 
         const DEFAULT_LOAD_MORE_STEP = 50;
 
-        let countBillingStatus = [{
+        const countBillingStatus = [{
             status: 'P',
             total: null
         },
@@ -20,12 +23,12 @@ sap.ui.define([
         let totalSaleOrderSet = 0;
         let current_skip = 0;
         let loadMoreTopUserSelect = DEFAULT_LOAD_MORE_STEP;
-        let filtersQueryString = null;
+        let filtersQueryString = [];
 
         return BaseController.extend("ordermanager.controller.SalesOrderSet", {
             onInit: function () {
-                this.getView().byId("tbSalesOrderSet")?.setBusy(true);
-
+                const oView = this.getView();
+                var oMultiInput = this.getView().byId("multiInputSearch");
                 var oModel = new sap.ui.model.json.JSONModel({
                     SalesOrderSet: [],
                     isShowLoadMoreBtn: false,
@@ -33,12 +36,21 @@ sap.ui.define([
                     totalTableLine: 0,
                     totalCurrentTableLine: 0
                 });
-                this.getView().setModel(oModel, "customSalesOrderSet");
+
+                oMultiInput.addValidator(function ({ text }) {
+                    console.log("here")
+                    const token = new Token({ key: text, text: text });
+                    filtersQueryString.push(new Filter("SalesOrderID", FilterOperator.EQ, text))
+                    return token;
+                });
+
+                oView.setModel(oModel, "customSalesOrderSet");
+                oView.byId("tbSalesOrderSet")?.setBusy(true);
 
                 // count BillingStatus
                 countBillingStatus.map(item => {
                     this.getOwnerComponent().getModel().read("/SalesOrderSet/$count", {
-                        filters: [new Filter("BillingStatus", "EQ", item.status)],
+                        filters: [new Filter("BillingStatus", FilterOperator.EQ, item.status)],
                         success: count => {
                             item.total = count;
                         }
@@ -54,8 +66,11 @@ sap.ui.define([
             },
             onAfterRendering: function () {
 
+                const oView = this.getView();
+                const oSalesOrderSet = oView.getModel('customSalesOrderSet');
+
                 // get list orders for main table
-                const skip = this.getView().getModel("config").getProperty("/SCREEN/SALES_ORDER_SET/PAGINATION_SKIP_BEGIN");
+                const skip = oView.getModel("config").getProperty("/SCREEN/SALES_ORDER_SET/PAGINATION_SKIP_BEGIN");
                 this.getView().getModel().read("/SalesOrderSet", {
                     sorters: [new Sorter("BillingStatus", true), new Sorter("SalesOrderID", true)],
                     urlParameters: {
@@ -64,13 +79,13 @@ sap.ui.define([
                     },
                     success: ({ results }) => {
                         //update main table
-                        this.getView().byId("tbSalesOrderSet")?.setBusy(false);
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, results);
+                        oView.byId("tbSalesOrderSet")?.setBusy(false);
+                        oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
                         //show load more button
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/isShowLoadMoreBtn`, true);
+                        oSalesOrderSet.setProperty(`/isShowLoadMoreBtn`, true);
                         // count table line
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/totalTableLine`, this.formatNumber(totalSaleOrderSet));
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/totalCurrentTableLine`, this.formatNumber(results.length));
+                        oSalesOrderSet.setProperty(`/totalTableLine`, this.formatNumber(totalSaleOrderSet));
+                        oSalesOrderSet.setProperty(`/totalCurrentTableLine`, this.formatNumber(results.length));
                         current_skip = DEFAULT_LOAD_MORE_STEP;
                     }
                 })
@@ -90,15 +105,12 @@ sap.ui.define([
                 });
             },
             handleValueHelp: function () {
-                var oInput = this.getView().byId("idInput");
+                var oInput = this.getView().byId("multiInputSearch");
                 if (!this._oValueHelpDialog) {
                     this._oValueHelpDialog = new sap.ui.comp.valuehelpdialog.ValueHelpDialog("idValueHelp", {
                         supportRanges: true,
                         supportRangesOnly: true,
                         title: '   ',
-                        // showHeader: false,
-                        // key: "CompanyCode",
-                        // descriptionKey: "CompayName",
                         ok: oEvent => {
                             let aTokens = oEvent.getParameter("tokens");
                             // Create Filter
@@ -107,7 +119,7 @@ sap.ui.define([
                                     var oRange = oToken.data("range");
                                     return new Filter({
                                         path: oRange.keyField,
-                                        operator: oRange.exclude ? "NE" : oRange.operation,
+                                        operator: oRange.exclude ? FilterOperator.NE : oRange.operation,
                                         value1: oRange.value1,
                                         value2: oRange.value2
                                     });
@@ -115,17 +127,15 @@ sap.ui.define([
                                 else {
                                     return new Filter({
                                         path: oRange.keyField,
-                                        operator: "EQ",
+                                        operator: FilterOperator.EQ,
                                         value1: aTokens[0].getKey()
                                     });
                                 }
                             });
 
-                            console.log("Filter", aFilters)
-
+                            filtersQueryString = aFilters;
                             oInput.setTokens(aTokens);
                             this._oValueHelpDialog.close();
-
                         },
                         cancel: () => {
                             this._oValueHelpDialog.close();
@@ -151,20 +161,32 @@ sap.ui.define([
                 ]);
 
                 this._oValueHelpDialog.open();
-                // console.log(event.getParameters().value)
-                // let oModel = this.getView()
-                // this.getView().getModel().read("/SalesOrderSet", {
-                //     filters: [new Filter("SalesOrderID", "EQ", "0500000001")],
-                //     success: function (SalesOrderSet) {
-                //         console.log(SalesOrderSet)
-                //         let oTable = oModel.byId("tbSalesOrderSet");
-                //         console.log(oTable)
-                //     },
-                //     error: function (error) {
-                //         console.log(error);
-                //     }
-                // })
             },
+
+            onTokenUpdate: function () {
+                // var oMultiInput = this.getView().byId("multiInputSearch").getTokens();
+                // console.log(oMultiInput)
+            },
+            applySearch: function () {
+                this.getView().getModel().read("/SalesOrderSet", {
+                    filters: filtersQueryString,
+                    success: ({ results }) => {
+                        console.log("filtersQueryString", filtersQueryString)
+                        if (results.length) {
+                            console.log(results)
+                        } else {
+                            MessageBox.error("Data not found!");
+                        }
+
+                    },
+                    error: function () {
+                        MessageBox.error("Error, please try again");
+                        filtersQueryString = [];
+                    },
+
+                })
+            },
+
             onPressSalesOrderLineItemSet: function (SalesOrderID) {
                 const oRouter = this.getOwnerComponent().getRouter();
                 console.log(SalesOrderID)
@@ -175,9 +197,10 @@ sap.ui.define([
             },
 
             onPressLoadMoreBtn: function () {
-                this.getView().getModel('customSalesOrderSet').setProperty("/loadMoreIndicator", true);
-
-                this.getView().getModel().read("/SalesOrderSet", {
+                const oView = this.getView();
+                const oSalesOrderSet = oView.getModel('customSalesOrderSet');
+                oSalesOrderSet.setProperty("/loadMoreIndicator", true);
+                oView.getModel().read("/SalesOrderSet", {
                     sorters: [new Sorter("BillingStatus", true), new Sorter("SalesOrderID", true)],
                     urlParameters: {
                         $skip: current_skip,
@@ -185,15 +208,12 @@ sap.ui.define([
                     },
                     filters: filtersQueryString,
                     success: ({ results }) => {
-                        this.getView().getModel('customSalesOrderSet').setProperty("/loadMoreIndicator", false);
+                        oSalesOrderSet.setProperty("/loadMoreIndicator", false);
                         //update main table
-                        const SalesOrderSet = this.getView().getModel('customSalesOrderSet').getProperty(`/SalesOrderSet`);
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/SalesOrderSet`, [...SalesOrderSet, ...results]);
-                        this.getView().getModel('customSalesOrderSet').setProperty(`/totalCurrentTableLine`, this.formatNumber(current_skip + results.length));
-
+                        const SalesOrderSet = oSalesOrderSet.getProperty(`/SalesOrderSet`);
+                        oSalesOrderSet.setProperty(`/SalesOrderSet`, [...SalesOrderSet, ...results]);
+                        oSalesOrderSet.setProperty(`/totalCurrentTableLine`, this.formatNumber(current_skip + results.length));
                         current_skip += loadMoreTopUserSelect;
-                        //show load more button
-                        // this.getView().getModel('customSalesOrderSet').setProperty(`/isShowLoadMoreBtn`, true);
                     }
                 })
             }

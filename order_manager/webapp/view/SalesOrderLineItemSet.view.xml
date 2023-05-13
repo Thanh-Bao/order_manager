@@ -5,24 +5,15 @@
     xmlns="sap.m"
     xmlns:l="sap.ui.layout"
     xmlns:core="sap.ui.core"
-    xmlns:form="sap.ui.layout.form"
 >
     <Page id="page123" title="{i18n>title}">
         <content />
 
         <Text text="hello" />
 
-        <form:SimpleForm
-            title="Selection"
-            editable="true"
-            layout="ResponsiveLayout"
-        >
-            <MultiInput id="idInput" width="400px" showValueHelp="true"
-                valueHelpRequest=".handleValueHelp">
+        <MultiInput id="idInput" width="400px" showValueHelp="true"
+            valueHelpRequest=".handleValueHelp" />
 
-            </MultiInput>
-
-        </form:SimpleForm>
 
     </Page>
 </mvc:View>

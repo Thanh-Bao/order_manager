@@ -25,3 +25,11 @@ https://blogs.sap.com/2019/10/21/implemention-of-odata-queries-in-sap-ui5-app/
 
 #Binding static JSON file to app
 https://github.com/Thanh-Bao/Fiori_hello_world/tree/cb83d5f69bc281491d78ddae3d35608d0ca01336/webapp
+
+#value help
+https://www.youtube.com/watch?v=z8YX7RQzQrQ&ab_channel=Arunkrishnamoorthy
+
+#value help token to Filter
+https://answers.sap.com/answers/13087523/view.html
+
+#float component https://jsbin.com/goduwuqiba/1/edit?html,js,output

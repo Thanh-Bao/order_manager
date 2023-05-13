@@ -14,18 +14,10 @@
                 alignItems="Center"
                 justifyContent="Center">
                 <Text text="Search by:  " />
-                <Select
-                    forceSelection="true"
-                    class="sapUiSmallMarginBeginEnd"
-                >
-                    <core:Item text="Sale Order Number" />
-                    <core:Item text="Customer" />
-                    <core:Item text="Product" />
-                </Select>
-                <Input
-                    id="specification_id"
-                    liveChange=".searchTyping"
-                />
+
+                <MultiInput id="idInput" width="400px" showValueHelp="true"
+                    valueHelpRequest=".handleValueHelp" />
+
                 <Button
                     text="apply"
                     icon="sap-icon://search"

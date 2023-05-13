@@ -21,6 +21,31 @@ sap.ui.define([
                         descriptionKey: "CompayName",
                         ok: oEvent => {
                             let aTokens = oEvent.getParameter("tokens");
+                            // const oProperties = aTokens.data("range");
+                            console.log("TOKEN:=>", aTokens)
+
+                            // Create Filter
+                            var aFilters = aTokens.map(function (oToken) {
+                                if (oToken.data("range")) {
+                                    var oRange = oToken.data("range");
+                                    return new Filter({
+                                        path: "ProductId",
+                                        operator: oRange.exclude ? "NE" : oRange.operation,
+                                        value1: oRange.value1,
+                                        value2: oRange.value2
+                                    });
+                                }
+                                else {
+                                    return new Filter({
+                                        path: "ProductId",
+                                        operator: "EQ",
+                                        value1: aTokens[0].getKey()
+                                    });
+                                }
+                            });
+
+                            console.log("Filter", aFilters)
+
                             oInput.setTokens(aTokens);
                             this._oValueHelpDialog.close();
 

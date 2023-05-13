@@ -11,9 +11,6 @@
 
         <Text text="hello" />
 
-        <MultiInput id="idInput" width="400px" showValueHelp="true"
-            valueHelpRequest=".handleValueHelp" />
-
 
     </Page>
 </mvc:View>

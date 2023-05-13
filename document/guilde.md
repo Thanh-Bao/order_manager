@@ -33,3 +33,7 @@ https://www.youtube.com/watch?v=z8YX7RQzQrQ&ab_channel=Arunkrishnamoorthy
 https://answers.sap.com/answers/13087523/view.html
 
 #float component https://jsbin.com/goduwuqiba/1/edit?html,js,output
+
+#Message page
+
+https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InitialPagePattern/sample/sap.m.sample.InitialPagePattern/code/view/fragments/sections/MessagePage.fragment.xml

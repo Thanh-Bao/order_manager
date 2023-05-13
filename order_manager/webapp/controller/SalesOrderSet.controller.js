@@ -89,20 +89,81 @@ sap.ui.define([
                     title: `${oGroup.key === '' ? "Billing Status empty" : oGroup.key} (${this.formatNumber(count)}) / total ${this.formatNumber(totalSaleOrderSet)}`
                 });
             },
-            searchTyping: function (event) {
-                console.log(event.getParameters().value)
-                let oModel = this.getView()
-                this.getView().getModel().read("/SalesOrderSet", {
-                    filters: [new Filter("SalesOrderID", "EQ", "0500000001")],
-                    success: function (SalesOrderSet) {
-                        console.log(SalesOrderSet)
-                        let oTable = oModel.byId("tbSalesOrderSet");
-                        console.log(oTable)
+            handleValueHelp: function () {
+                var oInput = this.getView().byId("idInput");
+                if (!this._oValueHelpDialog) {
+                    this._oValueHelpDialog = new sap.ui.comp.valuehelpdialog.ValueHelpDialog("idValueHelp", {
+                        supportRanges: true,
+                        supportRangesOnly: true,
+                        title: '   ',
+                        // showHeader: false,
+                        // key: "CompanyCode",
+                        // descriptionKey: "CompayName",
+                        ok: oEvent => {
+                            let aTokens = oEvent.getParameter("tokens");
+                            // Create Filter
+                            var aFilters = aTokens.map(function (oToken) {
+                                if (oToken.data("range")) {
+                                    var oRange = oToken.data("range");
+                                    return new Filter({
+                                        path: oRange.keyField,
+                                        operator: oRange.exclude ? "NE" : oRange.operation,
+                                        value1: oRange.value1,
+                                        value2: oRange.value2
+                                    });
+                                }
+                                else {
+                                    return new Filter({
+                                        path: oRange.keyField,
+                                        operator: "EQ",
+                                        value1: aTokens[0].getKey()
+                                    });
+                                }
+                            });
+
+                            console.log("Filter", aFilters)
+
+                            oInput.setTokens(aTokens);
+                            this._oValueHelpDialog.close();
+
+                        },
+                        cancel: () => {
+                            this._oValueHelpDialog.close();
+                        }
+                    })
+                }
+
+                //Creating Define Conditions 
+                this._oValueHelpDialog.setRangeKeyFields([
+                    {
+                        label: "Sale order number",
+                        key: "SalesOrderID"
                     },
-                    error: function (error) {
-                        console.log(error);
+                    {
+                        label: "Customer ID",
+                        key: "CustomerID"
                     }
-                })
+                    ,
+                    {
+                        label: "Product ID",
+                        key: "ProductID"
+                    }
+                ]);
+
+                this._oValueHelpDialog.open();
+                // console.log(event.getParameters().value)
+                // let oModel = this.getView()
+                // this.getView().getModel().read("/SalesOrderSet", {
+                //     filters: [new Filter("SalesOrderID", "EQ", "0500000001")],
+                //     success: function (SalesOrderSet) {
+                //         console.log(SalesOrderSet)
+                //         let oTable = oModel.byId("tbSalesOrderSet");
+                //         console.log(oTable)
+                //     },
+                //     error: function (error) {
+                //         console.log(error);
+                //     }
+                // })
             },
             onPressSalesOrderLineItemSet: function (SalesOrderID) {
                 const oRouter = this.getOwnerComponent().getRouter();

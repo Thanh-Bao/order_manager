@@ -13,10 +13,18 @@
                 height="100px"
                 alignItems="Center"
                 justifyContent="Center">
-                <Text text="Search by:  " />
+                <Text
+                    text="Search by:  "
+                    class="sapUiSmallMarginEnd"
+                />
 
                 <MultiInput id="idInput" width="400px" showValueHelp="true"
                     valueHelpRequest=".handleValueHelp" />
+
+                <Button
+                    icon="sap-icon://delete"
+                    type="Transparent"
+                />
 
                 <Button
                     text="apply"

@@ -9,7 +9,7 @@ sap.ui.define([
 ], function (JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox, fioriLibrary) {
     "use strict";
 
-    return Controller.extend("ordermanager.controller.List", {
+    return Controller.extend("ordermanager.controller.SalesOrderLineItemSet.List", {
         onInit: function () {
             this.oView = this.getView();
             this._bDescendingSort = false;

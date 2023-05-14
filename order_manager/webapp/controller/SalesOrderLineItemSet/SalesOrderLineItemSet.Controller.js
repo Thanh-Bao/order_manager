@@ -7,7 +7,7 @@ sap.ui.define([
     function (BaseController, Filter, Sorter) {
         "use strict";
 
-        return BaseController.extend("ordermanager.controller.SalesOrderLineItemSet", {
+        return BaseController.extend("ordermanager.controller.SalesOrderLineItemSet.SalesOrderLineItemSet", {
             onInit: function () {
 
             },

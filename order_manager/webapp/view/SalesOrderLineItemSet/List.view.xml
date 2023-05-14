@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="ordermanager.controller.List"
+    controllerName="ordermanager.controller.SalesOrderLineItemSet.List"
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:mvc="sap.ui.core.mvc">

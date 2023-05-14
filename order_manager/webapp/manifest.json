@@ -102,7 +102,7 @@
         "controlAggregation": "pages",
         "controlId": "app",
         "clearControlAggregation": false,
-        "transition": "slide"
+        "transition": "flip"
       },
       "routes": [
         {
@@ -112,7 +112,7 @@
         },
         {
           "name": "SalesOrderLineItemSet",
-          "pattern": "SalesOrderLineItemSet",
+          "pattern": "SalesOrderLineItemSet/{SalesOrderID}",
           "target": "SalesOrderLineItemSet"
         }
       ],
@@ -125,7 +125,7 @@
         },
         "SalesOrderLineItemSet": {
           "viewId": "SalesOrderLineItemSet",
-          "viewName": "SalesOrderLineItemSet"
+          "viewName": "SalesOrderLineItemSet.SalesOrderLineItemSet"
         }
       }
     },

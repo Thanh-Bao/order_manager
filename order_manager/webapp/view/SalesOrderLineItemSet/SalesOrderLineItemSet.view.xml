@@ -9,10 +9,10 @@
         layout="{/layout}"
     >
         <beginColumnPages>
-            <mvc:XMLView id="beginView" viewName="ordermanager.view.List" />
+            <mvc:XMLView id="beginView" viewName="ordermanager.view.SalesOrderLineItemSet.List" />
         </beginColumnPages>
         <midColumnPages>
-            <mvc:XMLView id="detailView" viewName="ordermanager.view.Detail" />
+            <mvc:XMLView id="detailView" viewName="ordermanager.view.SalesOrderLineItemSet.Detail" />
         </midColumnPages>
     </FlexibleColumnLayout>
 </mvc:View>

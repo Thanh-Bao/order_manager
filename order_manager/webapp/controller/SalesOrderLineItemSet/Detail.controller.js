@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (Controller) {
     "use strict";
 
-    return Controller.extend("ordermanager.controller.Detail", {
+    return Controller.extend("ordermanager.controller.SalesOrderLineItemSet.Detail", {
 
         onEditToggleButtonPress: function () {
             var oObjectPage = this.getView().byId("ObjectPageLayout"),

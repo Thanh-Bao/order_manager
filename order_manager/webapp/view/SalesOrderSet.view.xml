@@ -21,7 +21,6 @@
                 <MultiInput
                     id="multiInputSearch"
                     width="600px"
-                    tokenUpdate=".onTokenUpdate"
                     showValueHelp="true"
                     valueHelpRequest=".handleValueHelp"
                 />

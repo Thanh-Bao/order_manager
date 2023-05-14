@@ -2,12 +2,13 @@ sap.ui.define([
     "ordermanager/controller/BaseController",
     "sap/ui/model/Filter",
     "sap/ui/model/Sorter",
-    "sap/m/MessageBox",
+    "sap/ui/comp/valuehelpdialog/ValueHelpDialog",
     'sap/m/Token',
-    "sap/ui/model/FilterOperator"
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox",
 ],
 
-    function (BaseController, Filter, Sorter, MessageBox, Token, FilterOperator) {
+    function (BaseController, Filter, Sorter, ValueHelpDialog, Token, FilterOperator, MessageBox) {
         "use strict";
 
         const DEFAULT_LOAD_MORE_STEP = 50;
@@ -38,7 +39,6 @@ sap.ui.define([
                 });
 
                 oMultiInput.addValidator(function ({ text }) {
-                    console.log("here")
                     const token = new Token({ key: text, text: text });
                     filtersQueryString.push(new Filter("SalesOrderID", FilterOperator.EQ, text))
                     return token;
@@ -105,36 +105,17 @@ sap.ui.define([
                 });
             },
             handleValueHelp: function () {
-                var oInput = this.getView().byId("multiInputSearch");
+                const oView = this.getView();
+                const oInput = oView.byId("multiInputSearch");
                 if (!this._oValueHelpDialog) {
-                    this._oValueHelpDialog = new sap.ui.comp.valuehelpdialog.ValueHelpDialog("idValueHelp", {
+                    this._oValueHelpDialog = new ValueHelpDialog("idValueHelp", {
                         supportRanges: true,
                         supportRangesOnly: true,
                         title: '   ',
                         ok: oEvent => {
-                            let aTokens = oEvent.getParameter("tokens");
-                            // Create Filter
-                            var aFilters = aTokens.map(function (oToken) {
-                                if (oToken.data("range")) {
-                                    var oRange = oToken.data("range");
-                                    return new Filter({
-                                        path: oRange.keyField,
-                                        operator: oRange.exclude ? FilterOperator.NE : oRange.operation,
-                                        value1: oRange.value1,
-                                        value2: oRange.value2
-                                    });
-                                }
-                                else {
-                                    return new Filter({
-                                        path: oRange.keyField,
-                                        operator: FilterOperator.EQ,
-                                        value1: aTokens[0].getKey()
-                                    });
-                                }
-                            });
-
-                            filtersQueryString = aFilters;
-                            oInput.setTokens(aTokens);
+                            const currentTokens = oView.byId("multiInputSearch").getTokens();
+                            const valuHelpTokens = oEvent.getParameter("tokens");
+                            oInput.setTokens([...currentTokens, ...valuHelpTokens]);
                             this._oValueHelpDialog.close();
                         },
                         cancel: () => {
@@ -163,11 +144,30 @@ sap.ui.define([
                 this._oValueHelpDialog.open();
             },
 
-            onTokenUpdate: function () {
-                // var oMultiInput = this.getView().byId("multiInputSearch").getTokens();
-                // console.log(oMultiInput)
-            },
             applySearch: function () {
+                const aTokens = this.getView().byId("multiInputSearch").getTokens();
+                //Create Filter
+                const aFilters = aTokens.map(function (oToken) {
+                    if (oToken.data("range")) {
+                        var oRange = oToken.data("range");
+                        return new Filter({
+                            path: oRange.keyField,
+                            operator: oRange.exclude ? FilterOperator.NE : oRange.operation,
+                            value1: oRange.value1,
+                            value2: oRange.value2
+                        });
+                    }
+                    else {
+                        return new Filter({
+                            path: "SalesOrderID",
+                            operator: FilterOperator.EQ,
+                            value1: aTokens[0].getKey()
+                        });
+                    }
+                });
+
+                filtersQueryString = aFilters;
+
                 this.getView().getModel().read("/SalesOrderSet", {
                     filters: filtersQueryString,
                     success: ({ results }) => {

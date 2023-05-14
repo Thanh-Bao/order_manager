@@ -11,6 +11,10 @@ sap.ui.define([
 
     return Controller.extend("ordermanager.controller.SalesOrderLineItemSet.List", {
         onInit: function () {
+
+            const x = this.getRouter().getRoute("SalesOrderLineItemSet");
+            console.log(x);
+
             this.oView = this.getView();
             this._bDescendingSort = false;
             this.oProductsTable = this.oView.byId("productsTable");

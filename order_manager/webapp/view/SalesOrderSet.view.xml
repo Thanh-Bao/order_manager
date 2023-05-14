@@ -100,6 +100,7 @@
                                 <ObjectNumber number="{customSalesOrderSet>NetAmount}" />
                                 <ObjectNumber number="{customSalesOrderSet>TaxAmount}" />
                                 <Button
+                                    visible="{= ${customSalesOrderSet>BillingStatus} === '' ? false : true}"
                                     text="{customSalesOrderSet>BillingStatus}"
                                     width="50px"
                                     type="{= ${customSalesOrderSet>BillingStatus} === 'P' ? 'Attention' : 'Reject' }"
@@ -107,6 +108,7 @@
                                     id="myButton"
                                 />
                                 <Button
+                                    visible="{= ${customSalesOrderSet>DeliveryStatus} === '' ? false : true}"
                                     text="{customSalesOrderSet>DeliveryStatus}"
                                     type="{= ${customSalesOrderSet>DeliveryStatus} === 'D' ? 'Accept' : 'Attention' }"
                                     tooltip="{= ${customSalesOrderSet>DeliveryStatus} === 'D' ? 'Delivered' : 'Initial' }"

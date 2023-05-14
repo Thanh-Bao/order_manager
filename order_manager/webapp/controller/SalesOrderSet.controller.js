@@ -171,6 +171,9 @@ sap.ui.define([
                 oTable.setBusy(true)
                 filtersQueryString = aFilters;
 
+                current_skip = 0;
+                loadMoreTopUserSelect = DEFAULT_LOAD_MORE_STEP;
+
                 oModel.read("/SalesOrderSet", {
                     sorters: DEFAULT_SORTER,
                     filters: filtersQueryString,
@@ -215,10 +218,18 @@ sap.ui.define([
                     },
                 })
 
-                // re-count BillingStatus
+                // re-count 
                 COUNT_BILLING_STATUS.map(item =>
                     oModel.read("/SalesOrderSet/$count", {
                         filters: filtersQueryString,
+                        success: count => totalSaleOrderSet = count
+                    })
+                )
+
+                // re-count BillingStatus
+                COUNT_BILLING_STATUS.map(item =>
+                    oModel.read("/SalesOrderSet/$count", {
+                        filters: [...filtersQueryString, new Filter("BillingStatus", FilterOperator.EQ, item.status)],
                         success: count => item.total = count
                     })
                 )

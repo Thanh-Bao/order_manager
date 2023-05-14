@@ -215,6 +215,14 @@ sap.ui.define([
                     },
                 })
 
+                // re-count BillingStatus
+                COUNT_BILLING_STATUS.map(item =>
+                    oModel.read("/SalesOrderSet/$count", {
+                        filters: filtersQueryString,
+                        success: count => item.total = count
+                    })
+                )
+
 
             },
 

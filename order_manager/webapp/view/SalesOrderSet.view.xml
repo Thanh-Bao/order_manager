@@ -52,6 +52,7 @@
                     growingThreshold="25"
                     growingScrollToLoad="true"
                     sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
+                    fixedLayout="Strict"
                     items="{ path: 'customSalesOrderSet>/SalesOrderSet', 
                              sorter: { path: 'BillingStatus', 
                                        descending: true, 
@@ -62,7 +63,7 @@
                         <Column id="product" width="12em" headerMenu="columnHeaderMenu">
                             <Text text="SalesOrderID" />
                         </Column>
-                        <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Column width="auto" minScreenWidth="Tablet" demandPopin="true">
                             <Text text="Customer" />
                         </Column>
                         <Column width="8em" minScreenWidth="Tablet" demandPopin="true" hAlign="End">

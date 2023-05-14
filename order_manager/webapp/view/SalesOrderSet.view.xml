@@ -88,7 +88,8 @@
                         </Column>
                     </columns>
                     <items>
-                        <ColumnListItem press=".onPressSalesOrderLineItemSet(${SalesOrderID})"
+                        <ColumnListItem
+                            press=".onPressSalesOrderLineItemSet(${customSalesOrderSet>SalesOrderID})"
                             type="Navigation"
                             vAlign="Middle">
                             <cells>

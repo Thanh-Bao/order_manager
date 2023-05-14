@@ -55,7 +55,8 @@
         "sap.ui.comp": {},
         "sap.ui.generic.app": {},
         "sap.ui.table": {},
-        "sap.ushell": {}
+        "sap.ushell": {},
+        "sap.uxap": {}
       }
     },
     "contentDensities": {
@@ -79,6 +80,10 @@
       "config": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/config.json"
+      },
+      "products": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/products.json"
       }
     },
     "resources": {
@@ -96,15 +101,14 @@
         "viewPath": "ordermanager.view",
         "controlAggregation": "pages",
         "controlId": "app",
-        "clearControlAggregation": false
+        "clearControlAggregation": false,
+        "transition": "slide"
       },
       "routes": [
         {
           "name": "RouteSalesOrderSet",
           "pattern": ":?query:",
-          "target": [
-            "TargetSalesOrderSet"
-          ]
+          "target": "TargetSalesOrderSet"
         },
         {
           "name": "SalesOrderLineItemSet",
@@ -115,7 +119,6 @@
       "targets": {
         "TargetSalesOrderSet": {
           "viewType": "XML",
-          "transition": "slide",
           "clearControlAggregation": false,
           "viewId": "SalesOrderSet",
           "viewName": "SalesOrderSet"

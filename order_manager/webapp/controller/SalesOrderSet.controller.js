@@ -6,14 +6,14 @@ sap.ui.define([
     'sap/m/Token',
     "sap/ui/model/FilterOperator",
     "sap/m/MessageBox",
+    "sap/ui/model/json/JSONModel"
 ],
 
-    function (BaseController, Filter, Sorter, ValueHelpDialog, Token, FilterOperator, MessageBox) {
+    function (BaseController, Filter, Sorter, ValueHelpDialog, Token, FilterOperator, MessageBox, JSONModel) {
         "use strict";
 
         const DEFAULT_LOAD_MORE_STEP = 50;
-
-        const countBillingStatus = [{
+        const COUNT_BILLING_STATUS = [{
             status: 'P',
             total: null
         },
@@ -21,6 +21,8 @@ sap.ui.define([
             status: '',
             total: null
         }];
+        const DEFAULT_SORTER = [new Sorter("BillingStatus", true), new Sorter("SalesOrderID", true)];
+
         let totalSaleOrderSet = 0;
         let current_skip = 0;
         let loadMoreTopUserSelect = DEFAULT_LOAD_MORE_STEP;
@@ -29,8 +31,9 @@ sap.ui.define([
         return BaseController.extend("ordermanager.controller.SalesOrderSet", {
             onInit: function () {
                 const oView = this.getView();
-                var oMultiInput = this.getView().byId("multiInputSearch");
-                var oModel = new sap.ui.model.json.JSONModel({
+                const oMultiInput = oView.byId("multiInputSearch");
+                const oModel = this.getOwnerComponent().getModel();
+                const oStateModel = new JSONModel({
                     SalesOrderSet: [],
                     isShowLoadMoreBtn: false,
                     loadMoreIndicator: false,
@@ -44,24 +47,20 @@ sap.ui.define([
                     return token;
                 });
 
-                oView.setModel(oModel, "customSalesOrderSet");
+                oView.setModel(oStateModel, "customSalesOrderSet");
                 oView.byId("tbSalesOrderSet")?.setBusy(true);
 
                 // count BillingStatus
-                countBillingStatus.map(item => {
-                    this.getOwnerComponent().getModel().read("/SalesOrderSet/$count", {
+                COUNT_BILLING_STATUS.map(item =>
+                    oModel.read("/SalesOrderSet/$count", {
                         filters: [new Filter("BillingStatus", FilterOperator.EQ, item.status)],
-                        success: count => {
-                            item.total = count;
-                        }
+                        success: count => item.total = count
                     })
-                })
+                )
 
                 // count SaleOrderSet
                 this.getOwnerComponent().getModel().read("/SalesOrderSet/$count", {
-                    success: count => {
-                        totalSaleOrderSet = count
-                    }
+                    success: count => totalSaleOrderSet = count
                 })
             },
             onAfterRendering: function () {
@@ -72,7 +71,7 @@ sap.ui.define([
                 // get list orders for main table
                 const skip = oView.getModel("config").getProperty("/SCREEN/SALES_ORDER_SET/PAGINATION_SKIP_BEGIN");
                 this.getView().getModel().read("/SalesOrderSet", {
-                    sorters: [new Sorter("BillingStatus", true), new Sorter("SalesOrderID", true)],
+                    sorters: DEFAULT_SORTER,
                     urlParameters: {
                         $skip: skip,
                         $top: DEFAULT_LOAD_MORE_STEP
@@ -95,7 +94,7 @@ sap.ui.define([
             },
             getGroupHeader: function (oGroup) {
                 let count = 0;
-                countBillingStatus.forEach(o => {
+                COUNT_BILLING_STATUS.forEach(o => {
                     if (o.status === oGroup.key) {
                         count = o.total;
                     }
@@ -107,25 +106,24 @@ sap.ui.define([
             handleValueHelp: function () {
                 const oView = this.getView();
                 const oInput = oView.byId("multiInputSearch");
-                if (!this._oValueHelpDialog) {
-                    this._oValueHelpDialog = new ValueHelpDialog("idValueHelp", {
+                if (!this.oValueHelpDialog) {
+                    this.oValueHelpDialog = new ValueHelpDialog("idValueHelp", {
                         supportRanges: true,
                         supportRangesOnly: true,
                         title: '   ',
                         ok: oEvent => {
-                            const currentTokens = oView.byId("multiInputSearch").getTokens();
                             const valuHelpTokens = oEvent.getParameter("tokens");
-                            oInput.setTokens([...currentTokens, ...valuHelpTokens]);
-                            this._oValueHelpDialog.close();
+                            oInput.setTokens(valuHelpTokens);
+                            this.oValueHelpDialog.close();
                         },
                         cancel: () => {
-                            this._oValueHelpDialog.close();
+                            this.oValueHelpDialog.close();
                         }
                     })
                 }
 
                 //Creating Define Conditions 
-                this._oValueHelpDialog.setRangeKeyFields([
+                this.oValueHelpDialog.setRangeKeyFields([
                     {
                         label: "Sale order number",
                         key: "SalesOrderID"
@@ -141,11 +139,16 @@ sap.ui.define([
                     }
                 ]);
 
-                this._oValueHelpDialog.open();
+                this.oValueHelpDialog.open();
             },
 
             applySearch: function () {
-                const aTokens = this.getView().byId("multiInputSearch").getTokens();
+                const oView = this.getView();
+                const oModel = oView.getModel();
+                const oTable = oView.byId("tbSalesOrderSet");
+                const oSalesOrderSet = oView.getModel('customSalesOrderSet');
+                const aTokens = oView.byId("multiInputSearch").getTokens();
+                console.log("aToken", aTokens)
                 //Create Filter
                 const aFilters = aTokens.map(function (oToken) {
                     if (oToken.data("range")) {
@@ -165,26 +168,54 @@ sap.ui.define([
                         });
                     }
                 });
-
+                oTable.setBusy(true)
                 filtersQueryString = aFilters;
 
-                this.getView().getModel().read("/SalesOrderSet", {
+                oModel.read("/SalesOrderSet", {
+                    sorters: DEFAULT_SORTER,
                     filters: filtersQueryString,
+                    urlParameters: {
+                        $skip: current_skip,
+                        $top: loadMoreTopUserSelect
+                    },
                     success: ({ results }) => {
-                        console.log("filtersQueryString", filtersQueryString)
+                        oTable.setBusy(false)
                         if (results.length) {
                             console.log(results)
+                            oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
+                            oSalesOrderSet.setProperty(`/totalCurrentTableLine`, this.formatNumber(results.length));
+
                         } else {
+                            oTable.setShowNoData(true)
+                            oSalesOrderSet.setProperty(`/SalesOrderSet`, []);
                             MessageBox.error("Data not found!");
                         }
+                        filtersQueryString = []
 
                     },
                     error: function () {
+                        oTable.setBusy(false)
                         MessageBox.error("Error, please try again");
                         filtersQueryString = [];
                     },
-
                 })
+
+
+                oModel.read("/SalesOrderSet/$count", {
+                    filters: filtersQueryString,
+                    success: (count) => {
+                        totalSaleOrderSet = count;
+                        oSalesOrderSet.setProperty(`/totalTableLine`, this.formatNumber(totalSaleOrderSet));
+                        // handle is show load more button
+                        if (count < DEFAULT_LOAD_MORE_STEP) {
+                            oSalesOrderSet.setProperty(`/isShowLoadMoreBtn`, false);
+                        } else {
+                            oSalesOrderSet.setProperty(`/isShowLoadMoreBtn`, true);
+                        }
+                    },
+                })
+
+
             },
 
             onPressSalesOrderLineItemSet: function (SalesOrderID) {
@@ -201,7 +232,7 @@ sap.ui.define([
                 const oSalesOrderSet = oView.getModel('customSalesOrderSet');
                 oSalesOrderSet.setProperty("/loadMoreIndicator", true);
                 oView.getModel().read("/SalesOrderSet", {
-                    sorters: [new Sorter("BillingStatus", true), new Sorter("SalesOrderID", true)],
+                    sorters: DEFAULT_SORTER,
                     urlParameters: {
                         $skip: current_skip,
                         $top: loadMoreTopUserSelect

@@ -9,7 +9,7 @@
             <f:DynamicPageTitle>
                 <f:heading>
                     <Title
-                        text="Products ({products>/ProductCollectionStats/Counts/Total})" />
+                        text="Order ID {customSalesOrderLineItemSet>/SalesOrderID}" />
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
@@ -20,15 +20,12 @@
                 <OverflowToolbar class="sapFDynamicPageAlignContent">
                     <ToolbarSpacer />
                     <SearchField search=".onSearch" width="17.5rem" />
-                    <OverflowToolbarButton icon="sap-icon://add" text="Add"
-                        type="Transparent"
-                        press=".onAdd" />
                     <OverflowToolbarButton icon="sap-icon://sort" text="Sort"
                         type="Transparent"
                         press=".onSort" />
                 </OverflowToolbar>
                 <Table
-                    id="productsTable"
+                    id="tbSalesOrderLineItemSet"
                     inset="false"
                     items="{
 						path: 'products>/ProductCollection',

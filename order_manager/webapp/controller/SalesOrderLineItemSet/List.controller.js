@@ -3,21 +3,34 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    'sap/ui/model/Sorter',
-    'sap/m/MessageBox',
-    'sap/f/library'
-], function (JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox, fioriLibrary) {
+    "sap/ui/model/Sorter",
+    "sap/m/MessageBox",
+    "sap/f/library",
+    "sap/ui/core/UIComponent"
+], function (JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox, fioriLibrary, UIComponent) {
     "use strict";
 
     return Controller.extend("ordermanager.controller.SalesOrderLineItemSet.List", {
         onInit: function () {
 
-            const x = this.getRouter().getRoute("SalesOrderLineItemSet");
-            console.log(x);
-
+            UIComponent.getRouterFor(this).attachRouteMatched(this.routeMatched, this);
             this.oView = this.getView();
             this._bDescendingSort = false;
-            this.oProductsTable = this.oView.byId("productsTable");
+            this.oProductsTable = this.oView.byId("tbSalesOrderLineItemSet");
+
+            const oStateModel = new JSONModel({
+                SalesOrderLineItemSet: [],
+                SalesOrderID: 0,
+            });
+
+
+            this.getView().setModel(oStateModel, "customSalesOrderLineItemSet");
+        },
+
+        routeMatched: function (oEvent) {
+            const SalesOrderID = oEvent.getParameter("arguments").SalesOrderID;
+            console.log(SalesOrderID)
+            this.oView.getModel("customSalesOrderLineItemSet").setProperty("/SalesOrderID", SalesOrderID);
         },
 
         onSearch: function (oEvent) {
@@ -29,10 +42,6 @@ sap.ui.define([
             }
 
             this.oProductsTable.getBinding("items").filter(oTableSearchState, "Application");
-        },
-
-        onAdd: function () {
-            MessageBox.information("This functionality is not ready yet.", { title: "Aw, Snap!" });
         },
 
         onSort: function () {

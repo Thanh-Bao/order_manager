@@ -80,10 +80,6 @@
       "config": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/config.json"
-      },
-      "products": {
-        "type": "sap.ui.model.json.JSONModel",
-        "uri": "model/products.json"
       }
     },
     "resources": {
@@ -125,7 +121,7 @@
         },
         "SalesOrderLineItemSet": {
           "viewId": "SalesOrderLineItemSet",
-          "viewName": "SalesOrderLineItemSet.SalesOrderLineItemSet"
+          "viewName": "SalesOrderLineItemSet"
         }
       }
     },

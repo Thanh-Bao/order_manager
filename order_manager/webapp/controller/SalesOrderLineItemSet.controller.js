@@ -10,7 +10,7 @@ sap.ui.define([
 ], function (JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox, fioriLibrary, UIComponent) {
     "use strict";
 
-    return Controller.extend("ordermanager.controller.SalesOrderLineItemSet.List", {
+    return Controller.extend("ordermanager.controller.SalesOrderLineItemSet", {
         onInit: function () {
 
             UIComponent.getRouterFor(this).attachRouteMatched(this.routeMatched, this);

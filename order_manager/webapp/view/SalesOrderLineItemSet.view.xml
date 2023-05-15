@@ -1,0 +1,75 @@
+<mvc:View
+    controllerName="ordermanager.controller.SalesOrderLineItemSet"
+    displayBlock="true"
+    height="100%"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <VBox fitContainer="true">
+        <OverflowToolbar class="sapFDynamicPageAlignContent">
+            <ToolbarSpacer />
+            <SearchField search=".onSearch" placeholder="Search by product ID"
+                width="17.5rem" />
+            <OverflowToolbarButton icon="sap-icon://sort" text="Sort by item position"
+                type="Transparent"
+                press=".onSort" />
+        </OverflowToolbar>
+        <Table
+            id="tbSalesOrderLineItemSet"
+            sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
+            inset="false"
+            items="{
+						path: 'customSalesOrderLineItemSet>/SalesOrderLineItemSet',
+						sorter: {
+							path: 'ItemPosition'
+						}
+					}"
+            class="sapFDynamicPageAlignContent"
+            width="auto">
+            <columns>
+                <Column id="product" width="12em">
+                    <Text text="ItemPosition" />
+                </Column>
+                <Column width="14em" minScreenWidth="Tablet" demandPopin="true">
+                    <Text text="Product" />
+                </Column>
+                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                    <Text text="DeliveryDate" />
+                </Column>
+                <Column width="auto" minScreenWidth="Phone" demandPopin="true" hAlign="End">
+                    <Text text="Quantity" />
+                </Column>
+                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                    <Text text="GrossAmount" />
+                </Column>
+                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                    <Text text="NetAmount" />
+                </Column>
+                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                    <Text text="TaxAmount" />
+                </Column>
+                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+                    <Text text="CurrencyCode" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem type="Navigation" press=".onListItemPress">
+                    <cells>
+                        <Text
+                            text="{customSalesOrderLineItemSet>ItemPosition}" />
+                        <ObjectIdentifier
+                            title="{customSalesOrderLineItemSet>ProductID} - {customSalesOrderLineItemSet>ToProduct/Name} " />
+                        <Text
+                            text="{path: 'customSalesOrderLineItemSet>DeliveryDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"
+                        />
+                        <ObjectNumber number="{customSalesOrderLineItemSet>Quantity}" />
+                        <ObjectNumber number="{customSalesOrderLineItemSet>GrossAmount}" />
+                        <ObjectNumber number="{customSalesOrderLineItemSet>NetAmount}" />
+                        <ObjectNumber number="{customSalesOrderLineItemSet>TaxAmount}" />
+                        <Text
+                            text="{customSalesOrderLineItemSet>CurrencyCode}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </VBox>
+</mvc:View>

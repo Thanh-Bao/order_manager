@@ -4,6 +4,121 @@
     height="100%"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
+
+
+    <Panel
+        width="98%"
+        class="sapUiSmallMarginTopBottom sapUiSmallMarginBeginEnd"
+        expandable="true"
+        expanded="true"
+    >
+        <headerToolbar>
+            <OverflowToolbar>
+                <Title text="Header Level" />
+            </OverflowToolbar>
+        </headerToolbar>
+        <content>
+            <FlexBox
+                alignItems="Center"
+                justifyContent="SpaceAround">
+                <VBox>
+                    <HBox>
+                        <Title text="Sale order No: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Customer: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/CustomerID} - {customSalesOrderLineItemSet>/SalesOrderSet/CustomerName}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Gross Amount: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/GrossAmount}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Net Amount: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/NetAmount}" />
+                    </HBox>
+                </VBox>
+                <VBox class="sapUiMediumMarginBeginEnd">
+                    <HBox>
+                        <Title text="Tax Amount: " />
+                        <Text text="{customSalesOrderLineItemSet>/SalesOrderSet/TaxAmount}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Billing Status: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/BillingStatus}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Delivery Status: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/DeliveryStatus}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Note: " />
+                        <Text text="{customSalesOrderLineItemSet>/SalesOrderSet/Note}" />
+                    </HBox>
+
+                </VBox>
+            </FlexBox>
+        </content>
+    </Panel>
+
+
+    <Panel
+        width="98%"
+        class="sapUiSmallMarginTopBottom sapUiSmallMarginBeginEnd"
+        expandable="true"
+        expanded="true"
+    >
+        <headerToolbar>
+            <OverflowToolbar>
+                <Title text="Business Parner Detail" />
+            </OverflowToolbar>
+        </headerToolbar>
+        <content>
+            <FlexBox
+                alignItems="Center"
+                justifyContent="SpaceAround">
+                <VBox>
+                    <HBox>
+                        <Title text="Business Partner ID: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Company Name: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Address: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Email Address: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
+                    </HBox>
+                </VBox>
+                <VBox class="sapUiMediumMarginBeginEnd">
+                    <HBox>
+                        <Title text="Phone Number" />
+                        <Text text="dfd666666: " />
+                    </HBox>
+
+
+                </VBox>
+            </FlexBox>
+        </content>
+    </Panel>
+
+
     <VBox fitContainer="true">
         <OverflowToolbar class="sapFDynamicPageAlignContent">
             <ToolbarSpacer />

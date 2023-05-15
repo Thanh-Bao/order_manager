@@ -20,7 +20,7 @@ sap.ui.define([
 
             const oStateModel = new JSONModel({
                 SalesOrderLineItemSet: [],
-                SalesOrderID: 0,
+                SalesOrderSet: null
             });
 
 
@@ -33,17 +33,25 @@ sap.ui.define([
             const oTable = oView.byId("tbSalesOrderLineItemSet");
             const oModel = oView.getModel();
             const oSalesOrderSet = oView.getModel('customSalesOrderLineItemSet');
-            this.oView.getModel("customSalesOrderLineItemSet").setProperty("/SalesOrderID", SalesOrderID);
 
             oTable.setBusy(true);
-            //reset table
+
+            oModel.read(`/SalesOrderSet('${SalesOrderID}')`, {
+                success: (results) => {
+                    console.log(results)
+                    oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
+                },
+                error: function () {
+                    oSalesOrderSet.setProperty("/SalesOrderSet", null);
+                }
+            })
+
             oModel.read(`/SalesOrderSet('${SalesOrderID}')/ToLineItems`, {
                 urlParameters: {
                     $expand: "ToProduct"
                 },
                 success: ({ results }) => {
                     oTable.setBusy(false)
-                    console.log(results)
                     oSalesOrderSet.setProperty(`/SalesOrderLineItemSet`, results);
                 },
                 error: function () {

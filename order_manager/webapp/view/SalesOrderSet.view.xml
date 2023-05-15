@@ -61,7 +61,7 @@
                              groupHeaderFactory: '.getGroupHeader'
                             }">
                     <columns>
-                        <Column id="product" width="12em" headerMenu="columnHeaderMenu">
+                        <Column id="product" width="12em">
                             <Text text="SalesOrderID" />
                         </Column>
                         <Column width="auto" minScreenWidth="Tablet" demandPopin="true">
@@ -74,7 +74,6 @@
                             hAlign="End">
                             <Text text="NetAmount" />
                         </Column>
-                        <!-- add more -->
                         <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
                             hAlign="End">
                             <Text text="TaxAmount" />
@@ -83,7 +82,6 @@
                             hAlign="Center">
                             <Text text="BillingStatus" />
                         </Column>
-                        <!-- add more -->
                         <Column width="8em" hAlign="Center">
                             <Text text="DeliveryStatus" />
                         </Column>

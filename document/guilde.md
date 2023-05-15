@@ -37,3 +37,7 @@ https://answers.sap.com/answers/13087523/view.html
 #Message page
 
 https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InitialPagePattern/sample/sap.m.sample.InitialPagePattern/code/view/fragments/sections/MessagePage.fragment.xml
+
+#Format date XML
+
+https://gist.github.com/bvanzyl/fa374d61e6bd5f12308fd67aefe6a7c9

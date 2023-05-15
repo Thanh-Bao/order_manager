@@ -29,8 +29,27 @@ sap.ui.define([
 
         routeMatched: function (oEvent) {
             const SalesOrderID = oEvent.getParameter("arguments").SalesOrderID;
-            console.log(SalesOrderID)
+            const oView = this.getView();
+            const oTable = oView.byId("tbSalesOrderLineItemSet");
+            const oModel = oView.getModel();
+            const oSalesOrderSet = oView.getModel('customSalesOrderLineItemSet');
             this.oView.getModel("customSalesOrderLineItemSet").setProperty("/SalesOrderID", SalesOrderID);
+
+            oTable.setBusy(true)
+            oModel.read(`/SalesOrderSet('${SalesOrderID}')/ToLineItems`, {
+                urlParameters: {
+                    $expand: "ToProduct"
+                },
+                success: ({ results }) => {
+                    oTable.setBusy(false)
+                    console.log(results)
+                    oSalesOrderSet.setProperty(`/SalesOrderLineItemSet`, results);
+                },
+                error: function () {
+                    oTable.setBusy(false)
+                }
+            })
+
         },
 
         onSearch: function (oEvent) {
@@ -38,7 +57,7 @@ sap.ui.define([
                 sQuery = oEvent.getParameter("query");
 
             if (sQuery && sQuery.length > 0) {
-                oTableSearchState = [new Filter("Name", FilterOperator.Contains, sQuery)];
+                oTableSearchState = [new Filter("ProductID", FilterOperator.Contains, sQuery)];
             }
 
             this.oProductsTable.getBinding("items").filter(oTableSearchState, "Application");
@@ -47,7 +66,7 @@ sap.ui.define([
         onSort: function () {
             this._bDescendingSort = !this._bDescendingSort;
             var oBinding = this.oProductsTable.getBinding("items"),
-                oSorter = new Sorter("Name", this._bDescendingSort);
+                oSorter = new Sorter("ItemPosition", this._bDescendingSort);
 
             oBinding.sort(oSorter);
         },

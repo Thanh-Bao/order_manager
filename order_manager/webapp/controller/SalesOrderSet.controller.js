@@ -70,7 +70,7 @@ sap.ui.define([
 
                 // get list orders for main table
                 const skip = oView.getModel("config").getProperty("/SCREEN/SALES_ORDER_SET/PAGINATION_SKIP_BEGIN");
-                this.getView().getModel().read("/SalesOrderSet", {
+                oView.getModel().read("/SalesOrderSet", {
                     sorters: DEFAULT_SORTER,
                     urlParameters: {
                         $skip: skip,

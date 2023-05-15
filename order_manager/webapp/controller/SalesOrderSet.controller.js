@@ -142,13 +142,22 @@ sap.ui.define([
                 this.oValueHelpDialog.open();
             },
 
+            clearAllTokens: function () {
+                this.getView().byId('multiInputSearch').removeAllTokens();
+            },
+
             applySearch: function () {
                 const oView = this.getView();
                 const oModel = oView.getModel();
                 const oTable = oView.byId("tbSalesOrderSet");
                 const oSalesOrderSet = oView.getModel('customSalesOrderSet');
                 const aTokens = oView.byId("multiInputSearch").getTokens();
-                console.log("aToken", aTokens)
+
+                if (aTokens.length === 0) {
+                    MessageBox.information("please enter filter condition");
+                    return;
+                }
+
                 //Create Filter
                 const aFilters = aTokens.map(function (oToken) {
                     if (oToken.data("range")) {

@@ -35,7 +35,8 @@ sap.ui.define([
             const oSalesOrderSet = oView.getModel('customSalesOrderLineItemSet');
             this.oView.getModel("customSalesOrderLineItemSet").setProperty("/SalesOrderID", SalesOrderID);
 
-            oTable.setBusy(true)
+            oTable.setBusy(true);
+            //reset table
             oModel.read(`/SalesOrderSet('${SalesOrderID}')/ToLineItems`, {
                 urlParameters: {
                     $expand: "ToProduct"
@@ -47,6 +48,7 @@ sap.ui.define([
                 },
                 error: function () {
                     oTable.setBusy(false)
+                    oSalesOrderSet.setProperty("/SalesOrderLineItemSet", []);
                 }
             })
 

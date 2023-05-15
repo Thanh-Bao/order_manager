@@ -20,7 +20,8 @@ sap.ui.define([
 
             const oStateModel = new JSONModel({
                 SalesOrderLineItemSet: [],
-                SalesOrderSet: null
+                SalesOrderSet: null,
+                ToBusinessPartner: null
             });
 
 
@@ -45,7 +46,7 @@ sap.ui.define([
                     oSalesOrderSet.setProperty("/SalesOrderSet", null);
                 }
             })
-
+            // Product List
             oModel.read(`/SalesOrderSet('${SalesOrderID}')/ToLineItems`, {
                 urlParameters: {
                     $expand: "ToProduct"
@@ -57,6 +58,21 @@ sap.ui.define([
                 error: function () {
                     oTable.setBusy(false)
                     oSalesOrderSet.setProperty("/SalesOrderLineItemSet", []);
+                }
+            })
+
+            // Partner
+            oModel.read(`/SalesOrderSet('${SalesOrderID}')/ToBusinessPartner`, {
+                urlParameters: {
+                    $expand: "ToContacts"
+                },
+                success: (partner) => {
+                    oTable.setBusy(false)
+                    oSalesOrderSet.setProperty(`/ToBusinessPartner`, partner);
+                },
+                error: function () {
+                    oTable.setBusy(false)
+                    oSalesOrderSet.setProperty("/ToBusinessPartner", []);
                 }
             })
 

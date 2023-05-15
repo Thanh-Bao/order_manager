@@ -51,12 +51,12 @@
                     <HBox>
                         <Title text="Billing Status: " />
                         <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/BillingStatus}" />
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/BillingStatusDescription}" />
                     </HBox>
                     <HBox>
                         <Title text="Delivery Status: " />
                         <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/DeliveryStatus}" />
+                            text="{customSalesOrderLineItemSet>/SalesOrderSet/DeliveryStatusDescription}" />
                     </HBox>
                     <HBox>
                         <Title text="Note: " />
@@ -88,31 +88,30 @@
                     <HBox>
                         <Title text="Business Partner ID: " />
                         <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
+                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/BusinessPartnerID}" />
                     </HBox>
                     <HBox>
                         <Title text="Company Name: " />
                         <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Address: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
+                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/CompanyName}" />
                     </HBox>
                     <HBox>
                         <Title text="Email Address: " />
                         <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
+                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/EmailAddress}" />
+                    </HBox>
+                    <HBox>
+                        <Title text="Phone Number:" />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/PhoneNumber}" />
                     </HBox>
                 </VBox>
                 <VBox class="sapUiMediumMarginBeginEnd">
                     <HBox>
-                        <Title text="Phone Number" />
-                        <Text text="dfd666666: " />
+                        <Title text="Address: " />
+                        <Text
+                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/Address/Street}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/City}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/Country}" />
                     </HBox>
-
-
                 </VBox>
             </FlexBox>
         </content>

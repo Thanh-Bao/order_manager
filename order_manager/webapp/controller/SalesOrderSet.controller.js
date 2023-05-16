@@ -100,7 +100,7 @@ sap.ui.define([
                     }
                 });
                 return new sap.m.GroupHeaderListItem({
-                    title: `${oGroup.key === '' ? "Billing Status empty" : oGroup.key} (${this.formatNumber(count)}) / total ${this.formatNumber(totalSaleOrderSet)}`
+                    title: `${oGroup.key === '' ? "Billing Status empty" : oGroup.key} (${this.formatNumber(count)})`
                 });
             },
             handleValueHelp: function () {
@@ -144,6 +144,61 @@ sap.ui.define([
 
             clearAllTokens: function () {
                 this.getView().byId('multiInputSearch').removeAllTokens();
+            },
+
+            resetTable: function () {
+                const oView = this.getView();
+                const oMultiInput = oView.byId("multiInputSearch");
+                const oModel = oView.getModel();
+                const oSalesOrderSet = oView.getModel('customSalesOrderSet');
+
+                oSalesOrderSet.setProperty(`/SalesOrderSet`, []);
+                oSalesOrderSet.setProperty(`/isShowLoadMoreBtn`, false);
+                oSalesOrderSet.setProperty(`/loadMoreIndicator`, false);
+                oSalesOrderSet.setProperty(`/totalTableLine`, 0);
+                oSalesOrderSet.setProperty(`/totalCurrentTableLine`, 0);
+
+                oMultiInput.addValidator(function ({ text }) {
+                    const token = new Token({ key: text, text: text });
+                    filtersQueryString.push(new Filter("SalesOrderID", FilterOperator.EQ, text))
+                    return token;
+                });
+
+                oView.byId("tbSalesOrderSet")?.setBusy(true);
+
+                // count BillingStatus
+                COUNT_BILLING_STATUS.map(item =>
+                    oModel.read("/SalesOrderSet/$count", {
+                        filters: [new Filter("BillingStatus", FilterOperator.EQ, item.status)],
+                        success: count => item.total = count
+                    })
+                )
+
+                // count SaleOrderSet
+                oModel.read("/SalesOrderSet/$count", {
+                    success: count => totalSaleOrderSet = count
+                })
+
+                // get list orders for main table
+                const skip = oView.getModel("config").getProperty("/SCREEN/SALES_ORDER_SET/PAGINATION_SKIP_BEGIN");
+                oView.getModel().read("/SalesOrderSet", {
+                    sorters: DEFAULT_SORTER,
+                    urlParameters: {
+                        $skip: skip,
+                        $top: DEFAULT_LOAD_MORE_STEP
+                    },
+                    success: ({ results }) => {
+                        //update main table
+                        oView.byId("tbSalesOrderSet")?.setBusy(false);
+                        oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
+                        //show load more button
+                        oSalesOrderSet.setProperty(`/isShowLoadMoreBtn`, true);
+                        // count table line
+                        oSalesOrderSet.setProperty(`/totalTableLine`, this.formatNumber(totalSaleOrderSet));
+                        oSalesOrderSet.setProperty(`/totalCurrentTableLine`, this.formatNumber(results.length));
+                        current_skip = DEFAULT_LOAD_MORE_STEP;
+                    }
+                })
             },
 
             applySearch: function () {

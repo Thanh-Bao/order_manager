@@ -14,12 +14,13 @@
                 alignItems="Center"
                 justifyContent="Center">
                 <Text
-                    text="Search by:  "
+                    text="Search and filter by:  "
                     class="sapUiSmallMarginEnd"
                 />
 
                 <MultiInput
                     id="multiInputSearch"
+                    placeholder="default filter by Sale Order ID"
                     width="600px"
                     showValueHelp="true"
                     valueHelpRequest=".handleValueHelp"
@@ -38,12 +39,21 @@
                     press=".applySearch"
                     class="sapUiSmallMarginBegin" />
                 <Button
+                    press=".resetTable"
                     text="reset table"
                     icon="sap-icon://reset"
                     type="Transparent"
                     class="sapUiSmallMarginBegin" />
             </FlexBox>
         </Panel>
+
+        <Button
+            text="total {customSalesOrderSet>/totalTableLine}"
+            icon="sap-icon://sum"
+            type="Reject"
+            class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" />
+
+
         <l:VerticalLayout
             width="100%">
             <l:content>
@@ -53,7 +63,6 @@
                     growingThreshold="25"
                     growingScrollToLoad="true"
                     sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
-                    fixedLayout="Strict"
                     items="{ path: 'customSalesOrderSet>/SalesOrderSet', 
                              sorter: { path: 'BillingStatus', 
                                        descending: true, 

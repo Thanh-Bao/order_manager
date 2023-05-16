@@ -6,10 +6,11 @@ sap.ui.define([
     'sap/m/Token',
     "sap/ui/model/FilterOperator",
     "sap/m/MessageBox",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast",
 ],
 
-    function (BaseController, Filter, Sorter, ValueHelpDialog, Token, FilterOperator, MessageBox, JSONModel) {
+    function (BaseController, Filter, Sorter, ValueHelpDialog, Token, FilterOperator, MessageBox, JSONModel, MessageToast) {
         "use strict";
 
         const DEFAULT_LOAD_MORE_STEP = 50;
@@ -166,6 +167,8 @@ sap.ui.define([
 
                 oView.byId("tbSalesOrderSet")?.setBusy(true);
 
+                this.getView().byId('multiInputSearch').removeAllTokens();
+
                 // count BillingStatus
                 COUNT_BILLING_STATUS.map(item =>
                     oModel.read("/SalesOrderSet/$count", {
@@ -215,14 +218,18 @@ sap.ui.define([
 
                 //Create Filter
                 const aFilters = aTokens.map(function (oToken) {
+                    // phân biệt user nhập giá trị lọc trực tiếp vào ô input hay chọn từ value help
                     if (oToken.data("range")) {
+                        // phân biệt trường  hợp có $expand với ProductSet
                         var oRange = oToken.data("range");
-                        return new Filter({
-                            path: oRange.keyField,
-                            operator: oRange.exclude ? FilterOperator.NE : oRange.operation,
-                            value1: oRange.value1,
-                            value2: oRange.value2
-                        });
+                        if (oRange.keyField !== "ProductID") {
+                            return new Filter({
+                                path: oRange.keyField,
+                                operator: oRange.exclude ? FilterOperator.NE : oRange.operation,
+                                value1: oRange.value1,
+                                value2: oRange.value2
+                            });
+                        }
                     }
                     else {
                         return new Filter({
@@ -231,12 +238,14 @@ sap.ui.define([
                             value1: aTokens[0].getKey()
                         });
                     }
-                });
+                }).filter(item => item != undefined);
                 oTable.setBusy(true)
                 filtersQueryString = aFilters;
 
                 current_skip = 0;
                 loadMoreTopUserSelect = DEFAULT_LOAD_MORE_STEP;
+
+                console.log("aFilter:", aFilters)
 
                 oModel.read("/SalesOrderSet", {
                     sorters: DEFAULT_SORTER,
@@ -247,8 +256,9 @@ sap.ui.define([
                     },
                     success: ({ results }) => {
                         oTable.setBusy(false)
+
                         if (results.length) {
-                            console.log(results)
+                            MessageToast.show(`${results.length} items found`);
                             oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
                             oSalesOrderSet.setProperty(`/totalCurrentTableLine`, this.formatNumber(results.length));
 

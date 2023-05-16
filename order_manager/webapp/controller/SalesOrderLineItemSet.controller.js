@@ -21,7 +21,8 @@ sap.ui.define([
             const oStateModel = new JSONModel({
                 SalesOrderLineItemSet: [],
                 SalesOrderSet: null,
-                ToBusinessPartner: null
+                ToBusinessPartner: null,
+                ProductDetail: null
             });
 
 
@@ -38,8 +39,7 @@ sap.ui.define([
             oTable.setBusy(true);
 
             oModel.read(`/SalesOrderSet('${SalesOrderID}')`, {
-                success: (results) => {
-                    console.log(results)
+                success: results => {
                     oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
                 },
                 error: function () {
@@ -66,7 +66,7 @@ sap.ui.define([
                 urlParameters: {
                     $expand: "ToContacts"
                 },
-                success: (partner) => {
+                success: partner => {
                     oTable.setBusy(false)
                     oSalesOrderSet.setProperty(`/ToBusinessPartner`, partner);
                 },
@@ -96,10 +96,23 @@ sap.ui.define([
 
             oBinding.sort(oSorter);
         },
-        onListItemPress: function () {
-            var oFCL = this.oView.getParent().getParent();
+        onListItemPress: function (ProductID) {
+            console.log(ProductID)
+            const oView = this.getView();
+            oView.byId("dialogProductInfo").open();
+            oView.getModel().read(`/ProductSet('${ProductID}')`, {
 
-            oFCL.setLayout(fioriLibrary.LayoutType.TwoColumnsMidExpanded);
+                success: product => {
+                    console.log(product)
+                },
+                error: function () {
+
+                }
+            })
+        },
+        dialogProductDetailClose: function () {
+            this.getView().byId("dialogProductInfo").close();
+
         }
     });
 });

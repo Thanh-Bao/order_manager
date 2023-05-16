@@ -5,185 +5,196 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
 
+    <Page>
+        <Panel
+            width="98%"
+            class="sapUiSmallMarginTopBottom sapUiSmallMarginBeginEnd"
+            expandable="true"
+            expanded="true"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="Header Level" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <content>
+                <FlexBox
+                    alignItems="Center"
+                    justifyContent="SpaceAround">
+                    <VBox width="600px">
+                        <HBox>
+                            <Title text="Sale order No: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
+                        </HBox>
+                        <HBox>
+                            <Title text="Customer: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/SalesOrderSet/CustomerID} - {customSalesOrderLineItemSet>/SalesOrderSet/CustomerName}" />
+                        </HBox>
+                        <HBox>
+                            <Title text="Gross Amount: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/SalesOrderSet/GrossAmount}" />
+                        </HBox>
+                        <HBox>
+                            <Title text="Net Amount: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/SalesOrderSet/NetAmount}" />
+                        </HBox>
+                    </VBox>
+                    <VBox width="600px" class="sapUiMediumMarginBeginEnd">
+                        <HBox>
+                            <Title text="Tax Amount: " />
+                            <Text text="{customSalesOrderLineItemSet>/SalesOrderSet/TaxAmount}" />
+                        </HBox>
+                        <HBox>
+                            <Title text="Billing Status: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/SalesOrderSet/BillingStatusDescription}" />
+                        </HBox>
+                        <HBox>
+                            <Title text="Delivery Status: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/SalesOrderSet/DeliveryStatusDescription}" />
+                        </HBox>
+                        <HBox>
+                            <Title text="Note: " />
+                            <Text text="{customSalesOrderLineItemSet>/SalesOrderSet/Note}" />
+                        </HBox>
 
-    <Panel
-        width="98%"
-        class="sapUiSmallMarginTopBottom sapUiSmallMarginBeginEnd"
-        expandable="true"
-        expanded="true"
-    >
-        <headerToolbar>
-            <OverflowToolbar>
-                <Title text="Header Level" />
+                    </VBox>
+                </FlexBox>
+            </content>
+        </Panel>
+
+
+        <Panel
+            width="98%"
+            class="sapUiSmallMarginTopBottom sapUiSmallMarginBeginEnd"
+            expandable="true"
+            expanded="true"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="Business Parner Detail" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <content>
+                <FlexBox
+                    alignItems="Center"
+                    justifyContent="SpaceAround">
+                    <VBox width="600px">
+                        <HBox>
+                            <Title text="Business Partner ID: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/ToBusinessPartner/BusinessPartnerID}" />
+                        </HBox>
+                        <HBox>
+                            <Title text="Company Name: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/ToBusinessPartner/CompanyName}" />
+                        </HBox>
+                        <HBox>
+                            <Title text="Email Address: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/ToBusinessPartner/EmailAddress}" />
+                        </HBox>
+                        <HBox>
+                            <Title text="Phone Number:" />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/ToBusinessPartner/PhoneNumber}" />
+                        </HBox>
+                    </VBox>
+                    <VBox width="600px" class="sapUiMediumMarginBeginEnd">
+                        <HBox>
+                            <Title text="Address: " />
+                            <Text
+                                text="{customSalesOrderLineItemSet>/ToBusinessPartner/Address/Street}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/City}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/Country}" />
+                        </HBox>
+                    </VBox>
+                </FlexBox>
+            </content>
+        </Panel>
+
+
+        <VBox fitContainer="true">
+            <OverflowToolbar class="sapFDynamicPageAlignContent">
+                <ToolbarSpacer />
+                <SearchField search=".onSearch" placeholder="Search by product ID"
+                    width="17.5rem" />
+                <OverflowToolbarButton icon="sap-icon://sort" text="Sort by item position"
+                    type="Transparent"
+                    press=".onSort" />
             </OverflowToolbar>
-        </headerToolbar>
-        <content>
-            <FlexBox
-                alignItems="Center"
-                justifyContent="SpaceAround">
-                <VBox>
-                    <HBox>
-                        <Title text="Sale order No: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Customer: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/CustomerID} - {customSalesOrderLineItemSet>/SalesOrderSet/CustomerName}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Gross Amount: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/GrossAmount}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Net Amount: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/NetAmount}" />
-                    </HBox>
-                </VBox>
-                <VBox class="sapUiMediumMarginBeginEnd">
-                    <HBox>
-                        <Title text="Tax Amount: " />
-                        <Text text="{customSalesOrderLineItemSet>/SalesOrderSet/TaxAmount}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Billing Status: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/BillingStatusDescription}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Delivery Status: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/SalesOrderSet/DeliveryStatusDescription}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Note: " />
-                        <Text text="{customSalesOrderLineItemSet>/SalesOrderSet/Note}" />
-                    </HBox>
-
-                </VBox>
-            </FlexBox>
-        </content>
-    </Panel>
-
-
-    <Panel
-        width="98%"
-        class="sapUiSmallMarginTopBottom sapUiSmallMarginBeginEnd"
-        expandable="true"
-        expanded="true"
-    >
-        <headerToolbar>
-            <OverflowToolbar>
-                <Title text="Business Parner Detail" />
-            </OverflowToolbar>
-        </headerToolbar>
-        <content>
-            <FlexBox
-                alignItems="Center"
-                justifyContent="SpaceAround">
-                <VBox>
-                    <HBox>
-                        <Title text="Business Partner ID: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/BusinessPartnerID}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Company Name: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/CompanyName}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Email Address: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/EmailAddress}" />
-                    </HBox>
-                    <HBox>
-                        <Title text="Phone Number:" />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/PhoneNumber}" />
-                    </HBox>
-                </VBox>
-                <VBox class="sapUiMediumMarginBeginEnd">
-                    <HBox>
-                        <Title text="Address: " />
-                        <Text
-                            text="{customSalesOrderLineItemSet>/ToBusinessPartner/Address/Street}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/City}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/Country}" />
-                    </HBox>
-                </VBox>
-            </FlexBox>
-        </content>
-    </Panel>
-
-
-    <VBox fitContainer="true">
-        <OverflowToolbar class="sapFDynamicPageAlignContent">
-            <ToolbarSpacer />
-            <SearchField search=".onSearch" placeholder="Search by product ID"
-                width="17.5rem" />
-            <OverflowToolbarButton icon="sap-icon://sort" text="Sort by item position"
-                type="Transparent"
-                press=".onSort" />
-        </OverflowToolbar>
-        <Table
-            id="tbSalesOrderLineItemSet"
-            sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
-            inset="false"
-            items="{
+            <Table
+                id="tbSalesOrderLineItemSet"
+                sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
+                inset="false"
+                items="{
 						path: 'customSalesOrderLineItemSet>/SalesOrderLineItemSet',
 						sorter: {
 							path: 'ItemPosition'
 						}
 					}"
-            class="sapFDynamicPageAlignContent"
-            width="auto">
-            <columns>
-                <Column id="product" width="12em">
-                    <Text text="ItemPosition" />
-                </Column>
-                <Column width="14em" minScreenWidth="Tablet" demandPopin="true">
-                    <Text text="Product" />
-                </Column>
-                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                    <Text text="DeliveryDate" />
-                </Column>
-                <Column width="auto" minScreenWidth="Phone" demandPopin="true" hAlign="End">
-                    <Text text="Quantity" />
-                </Column>
-                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                    <Text text="GrossAmount" />
-                </Column>
-                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                    <Text text="NetAmount" />
-                </Column>
-                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                    <Text text="TaxAmount" />
-                </Column>
-                <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
-                    <Text text="CurrencyCode" />
-                </Column>
-            </columns>
-            <items>
-                <ColumnListItem type="Navigation" press=".onListItemPress">
-                    <cells>
-                        <Text
-                            text="{customSalesOrderLineItemSet>ItemPosition}" />
-                        <ObjectIdentifier
-                            title="{customSalesOrderLineItemSet>ProductID} - {customSalesOrderLineItemSet>ToProduct/Name} " />
-                        <Text
-                            text="{path: 'customSalesOrderLineItemSet>DeliveryDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"
-                        />
-                        <ObjectNumber number="{customSalesOrderLineItemSet>Quantity}" />
-                        <ObjectNumber number="{customSalesOrderLineItemSet>GrossAmount}" />
-                        <ObjectNumber number="{customSalesOrderLineItemSet>NetAmount}" />
-                        <ObjectNumber number="{customSalesOrderLineItemSet>TaxAmount}" />
-                        <Text
-                            text="{customSalesOrderLineItemSet>CurrencyCode}" />
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
-    </VBox>
+                class="sapFDynamicPageAlignContent"
+                width="auto">
+                <columns>
+                    <Column id="product" width="12em">
+                        <Text text="ItemPosition" />
+                    </Column>
+                    <Column width="14em" minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Product" />
+                    </Column>
+                    <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                        <Text text="DeliveryDate" />
+                    </Column>
+                    <Column width="auto" minScreenWidth="Phone" demandPopin="true" hAlign="End">
+                        <Text text="Quantity" />
+                    </Column>
+                    <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                        <Text text="GrossAmount" />
+                    </Column>
+                    <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                        <Text text="NetAmount" />
+                    </Column>
+                    <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+                        <Text text="TaxAmount" />
+                    </Column>
+                    <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+                        <Text text="CurrencyCode" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation"
+                        press=".onListItemPress(${customSalesOrderLineItemSet>ProductID})">
+                        <cells>
+                            <Text
+                                text="{customSalesOrderLineItemSet>ItemPosition}" />
+                            <ObjectIdentifier
+                                title="{customSalesOrderLineItemSet>ProductID} - {customSalesOrderLineItemSet>ToProduct/Name} " />
+                            <Text
+                                text="{path: 'customSalesOrderLineItemSet>DeliveryDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"
+                            />
+                            <ObjectNumber number="{customSalesOrderLineItemSet>Quantity}" />
+                            <ObjectNumber number="{customSalesOrderLineItemSet>GrossAmount}" />
+                            <ObjectNumber number="{customSalesOrderLineItemSet>NetAmount}" />
+                            <ObjectNumber number="{customSalesOrderLineItemSet>TaxAmount}" />
+                            <Text
+                                text="{customSalesOrderLineItemSet>CurrencyCode}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </VBox>
+
+        <Dialog id="dialogProductInfo" draggable="true" title="Product detail">
+
+            <FlexBox justifyContent="Center" alignContent="Center">
+                <Button type="Emphasized" text="close" press=".dialogProductDetailClose"
+                    class="sapUiTinyMarginTop sapUiTinyMarginBottom" />
+            </FlexBox>
+
+        </Dialog>
+    </Page>
 </mvc:View>

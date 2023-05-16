@@ -103,7 +103,7 @@ sap.ui.define([
             oView.getModel().read(`/ProductSet('${ProductID}')`, {
 
                 success: product => {
-                    console.log(product)
+                    oView.getModel('customSalesOrderLineItemSet').setProperty(`/ProductDetail`, product);
                 },
                 error: function () {
 

@@ -107,7 +107,7 @@
                         </HBox>
                     </VBox>
                     <VBox width="600px" class="sapUiMediumMarginBeginEnd">
-                        <HBox>
+                        <HBox class='sapUiMediumMargin'>
                             <Title text="Address: " />
                             <Text
                                 text="{customSalesOrderLineItemSet>/ToBusinessPartner/Address/Street}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/City}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/Country}" />
@@ -189,6 +189,118 @@
         </VBox>
 
         <Dialog id="dialogProductInfo" draggable="true" title="Product detail">
+
+
+            <VBox class="sapUiMediumMarginBeginEnd sapUiSmallMarginTopBottom">
+                <HBox>
+                    <Title text="ProductID: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/ProductID}" />
+                </HBox>
+                <HBox>
+                    <Title text="TypeCode: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/TypeCode}" />
+                </HBox>
+                <HBox>
+                    <Title text="Category: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/Category}" />
+                </HBox>
+                <HBox>
+                    <Title text="Name: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/Name}" />
+                </HBox>
+                <HBox>
+                    <Title text="NameLanguage: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/NameLanguage}" />
+                </HBox>
+                <HBox>
+                    <Title text="Description: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/Description}" />
+                </HBox>
+                <HBox>
+                    <Title text="DescriptionLanguage: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/DescriptionLanguage}" />
+                </HBox>
+                <HBox>
+                    <Title text="SupplierID: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/SupplierID}" />
+                </HBox>
+                <HBox>
+                    <Title text="SupplierName: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/SupplierName}" />
+                </HBox>
+                <HBox>
+                    <Title text="TaxTarifCode: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/TaxTarifCode}" />
+                </HBox>
+                <HBox>
+                    <Title text="MeasureUnit: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/MeasureUnit}" />
+                </HBox>
+                <HBox>
+                    <Title text="WeightMeasure: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/WeightMeasure}" />
+                </HBox>
+                <HBox>
+                    <Title text="WeightUnit: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/WeightUnit}" />
+                </HBox>
+                <HBox>
+                    <Title text="CurrencyCode: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/CurrencyCode}" />
+                </HBox>
+                <HBox>
+                    <Title text="Price: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/Price}" />
+                </HBox>
+                <HBox>
+                    <Title text="Width: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/Width}" />
+                </HBox>
+                <HBox>
+                    <Title text="Depth: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/Depth}" />
+                </HBox>
+                <HBox>
+                    <Title text="Height: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/Height}" />
+                </HBox>
+                <HBox>
+                    <Title text="DimUnit: " />
+                    <Text
+                        text="{customSalesOrderLineItemSet>/ProductDetail/DimUnit}" />
+                </HBox>
+                <HBox>
+                    <Title text="CreatedAt: " />
+                    <Text
+                        text="{path: 'customSalesOrderLineItemSet>/ProductDetail/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"
+                    />
+                </HBox>
+                <HBox>
+                    <Title text="ChangedAt: " />
+                    <Text
+                        text="{path: 'customSalesOrderLineItemSet>/ProductDetail/ChangedAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"
+                    />
+                </HBox>
+            </VBox>
+
 
             <FlexBox justifyContent="Center" alignContent="Center">
                 <Button type="Emphasized" text="close" press=".dialogProductDetailClose"

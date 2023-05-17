@@ -320,8 +320,9 @@
             <Button type="Emphasized" text="Goods Issue Created" icon="sap-icon://action"
                 enabled="{customSalesOrderLineItemSet>/isEnableButton/issue}" />
             <Button type="Emphasized" text="SO invoice Created" icon="sap-icon://action"
+                press=".SOinvoiceHander(${customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID})"
                 enabled="{customSalesOrderLineItemSet>/isEnableButton/invoice}" />
-            <Button type="Reject" text="Cancel" icon="sap-icon://cancel"
+            <Button type="Reject" text="Cancel" icon="sap-icon://cancel" press=".cancelHander"
                 enabled="{customSalesOrderLineItemSet>/isEnableButton/cancel}" />
         </semantic:customFooterContent>
 

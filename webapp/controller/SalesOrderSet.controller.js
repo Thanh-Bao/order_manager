@@ -356,7 +356,6 @@ sap.ui.define([
 
             onPressSalesOrderLineItemSet: function (SalesOrderID) {
                 const oRouter = this.getOwnerComponent().getRouter();
-                console.log(SalesOrderID)
                 oRouter.navTo("SalesOrderLineItemSet", { SalesOrderID: SalesOrderID });
             },
             onChangeLoadMoreItem: function (event) {

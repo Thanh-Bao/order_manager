@@ -6,8 +6,9 @@ sap.ui.define([
     "sap/ui/model/Sorter",
     "sap/m/MessageBox",
     "sap/f/library",
-    "sap/ui/core/UIComponent"
-], function (JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox, fioriLibrary, UIComponent) {
+    "sap/ui/core/UIComponent",
+    "sap/ui/core/routing/History"
+], function (JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox, fioriLibrary, UIComponent, History) {
     "use strict";
 
     return Controller.extend("ordermanager.controller.SalesOrderLineItemSet", {
@@ -225,6 +226,26 @@ sap.ui.define([
                     title: "Business Partner Location"
                 });
             }
+        },
+
+        SOinvoiceHander: function (SalesOrderID) {
+            // this.getView().getModel().create("/SalesOrderSetSalesOrder_InvoiceCreated", {
+            //     urlParameters: {
+            //         SalesOrderID: "0500000999"
+            //     },
+            //     success: () => console.log("hello"),
+            //     error: err => console.log(err)
+            // });
+            this.getView().getModel().callFunction("/SalesOrder_InvoiceCreated", {
+                method: "POST",
+                urlParameters: { SalesOrderID: SalesOrderID },
+                sucess: function (oData, response) { console.log("hje") },
+                error: function (oError) { }
+            });
+        },
+
+        cancelHander: function () {
+            this.getOwnerComponent().getRouter().navTo('RouteSalesOrderSet');
         }
     });
 });

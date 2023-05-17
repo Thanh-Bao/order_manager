@@ -229,13 +229,6 @@ sap.ui.define([
         },
 
         SOinvoiceHander: function (SalesOrderID) {
-            // this.getView().getModel().create("/SalesOrderSetSalesOrder_InvoiceCreated", {
-            //     urlParameters: {
-            //         SalesOrderID: "0500000999"
-            //     },
-            //     success: () => console.log("hello"),
-            //     error: err => console.log(err)
-            // });
             this.getView().getModel().callFunction("/SalesOrder_InvoiceCreated", {
                 method: "POST",
                 urlParameters: { SalesOrderID: SalesOrderID },

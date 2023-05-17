@@ -232,7 +232,7 @@ sap.ui.define([
             this.getView().getModel().callFunction("/SalesOrder_InvoiceCreated", {
                 method: "POST",
                 urlParameters: { SalesOrderID: SalesOrderID },
-                sucess: function (oData, response) { console.log("hje") },
+                sucess: function (oData, response) { },
                 error: function (oError) { }
             });
         },

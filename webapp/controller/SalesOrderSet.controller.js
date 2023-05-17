@@ -102,7 +102,7 @@ sap.ui.define([
                     }
                 });
                 return new sap.m.GroupHeaderListItem({
-                    title: `${oGroup.key === '' ? "Billing Status empty" : oGroup.key} (${this.formatNumber(count)})`
+                    title: `${oGroup.key === '' ? "Initial" : "Paied"} (${this.formatNumber(count)})`
                 });
             },
             handleValueHelp: function () {

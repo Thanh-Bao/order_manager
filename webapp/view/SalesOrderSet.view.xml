@@ -104,9 +104,27 @@
                                 <ObjectIdentifier title="{customSalesOrderSet>SalesOrderID}" />
                                 <Text
                                     text="{customSalesOrderSet>CustomerID} - {customSalesOrderSet>CustomerName}" />
-                                <ObjectNumber number="{customSalesOrderSet>GrossAmount}" />
-                                <ObjectNumber number="{customSalesOrderSet>NetAmount}" />
-                                <ObjectNumber number="{customSalesOrderSet>TaxAmount}" />
+                                <ObjectNumber
+                                    number="{
+								parts:[{path:'customSalesOrderSet>GrossAmount'},{path:'customSalesOrderSet>CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+                                    unit="{customSalesOrderSet>CurrencyCode}" />
+                                <ObjectNumber
+                                    number="{
+								parts:[{path:'customSalesOrderSet>NetAmount'},{path:'customSalesOrderSet>CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+                                    unit="{customSalesOrderSet>CurrencyCode}" />
+                                <ObjectNumber
+                                    number="{
+								parts:[{path:'customSalesOrderSet>TaxAmount'},{path:'customSalesOrderSet>CurrencyCode'}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {showMeasure: false}
+							}"
+                                    unit="{customSalesOrderSet>CurrencyCode}" />
                                 <Button
                                     visible="{= ${customSalesOrderSet>BillingStatus} === '' ? false : true}"
                                     text="{customSalesOrderSet>BillingStatus}"

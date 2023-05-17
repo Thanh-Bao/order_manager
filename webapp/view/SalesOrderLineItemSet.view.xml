@@ -15,7 +15,8 @@
         >
             <headerToolbar>
                 <OverflowToolbar>
-                    <Title text="{i18n>HeaderLevel}" />
+                    <Title
+                        text="Salse order No: {customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
                 </OverflowToolbar>
             </headerToolbar>
             <content>
@@ -23,11 +24,6 @@
                     alignItems="Center"
                     justifyContent="SpaceAround">
                     <VBox width="600px">
-                        <HBox>
-                            <Title text="{i18n>SaleOrderNo}:" />
-                            <Text
-                                text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
-                        </HBox>
                         <HBox>
                             <Title text="{i18n>Customer}: " />
                             <Text

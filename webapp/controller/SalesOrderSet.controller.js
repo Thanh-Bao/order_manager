@@ -28,6 +28,7 @@ sap.ui.define([
         let current_skip = 0;
         let loadMoreTopUserSelect = DEFAULT_LOAD_MORE_STEP;
         let filtersQueryString = [];
+        let filterByProductID = null;
 
         return BaseController.extend("ordermanager.controller.SalesOrderSet", {
             onInit: function () {
@@ -216,8 +217,6 @@ sap.ui.define([
                     return;
                 }
 
-                console.log("aTokens:", aTokens)
-
                 //Create Filter
                 const aFilters = aTokens.map(function (oToken) {
                     // phân biệt user nhập giá trị lọc trực tiếp vào ô input hay chọn từ value help
@@ -231,6 +230,8 @@ sap.ui.define([
                                 value1: oRange.value1,
                                 value2: oRange.value2
                             });
+                        } else {
+                            filterByProductID = oRange.value1;
                         }
                     }
                     else {
@@ -274,10 +275,41 @@ sap.ui.define([
                     },
                     error: function () {
                         oTable.setBusy(false)
-                        MessageBox.error("Error, please try again");
                         filtersQueryString = [];
                     },
                 })
+
+
+                //// start --- filter by product
+                if (filterByProductID) {
+                    oTable.setBusy(true)
+                    oModel.read("/SalesOrderLineItemSet", {
+                        filters: [new Filter("ProductID", FilterOperator.EQ, filterByProductID)],
+                        success: ({ results }) => {
+                            oTable.setBusy(false)
+
+                            if (results.length) {
+                                MessageToast.show(`${results.length} items found`);
+                                oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
+
+                            } else {
+                                oTable.setShowNoData(true)
+                                oSalesOrderSet.setProperty(`/SalesOrderSet`, []);
+                                MessageBox.error("Data not found!");
+                            }
+                            filtersQueryString = [];
+                            filterByProductID = false;
+
+                        },
+                        error: function () {
+                            oTable.setBusy(false)
+                            MessageBox.error("Error, please try again");
+                            filtersQueryString = [];
+                            filterByProductID = false;
+                        },
+                    })
+                }
+                /// end --- filter by product
 
 
                 oModel.read("/SalesOrderSet/$count", {

@@ -261,7 +261,6 @@ sap.ui.define([
                         oTable.setBusy(false)
 
                         if (results.length) {
-                            MessageToast.show(`${results.length} items found`);
                             oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
                             oSalesOrderSet.setProperty(`/totalCurrentTableLine`, this.formatNumber(results.length));
 
@@ -285,12 +284,22 @@ sap.ui.define([
                     oTable.setBusy(true)
                     oModel.read("/SalesOrderLineItemSet", {
                         filters: [new Filter("ProductID", FilterOperator.EQ, filterByProductID)],
+                        urlParameters: {
+                            $expand: "ToHeader"
+                        },
                         success: ({ results }) => {
                             oTable.setBusy(false)
 
                             if (results.length) {
                                 MessageToast.show(`${results.length} items found`);
-                                oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
+                                const ls = results.map(item => ({
+                                    ...item,
+                                    CustomerID: item.ToHeader.CustomerID,
+                                    CustomerName: item.ToHeader.CustomerName,
+                                    BillingStatus: item.ToHeader.BillingStatus,
+                                    DeliveryStatus: item.ToHeader.DeliveryStatus
+                                }))
+                                oSalesOrderSet.setProperty(`/SalesOrderSet`, ls);
 
                             } else {
                                 oTable.setShowNoData(true)

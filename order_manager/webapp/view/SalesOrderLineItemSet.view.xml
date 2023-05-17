@@ -15,7 +15,7 @@
         >
             <headerToolbar>
                 <OverflowToolbar>
-                    <Title text="Header Level" />
+                    <Title text="{i18n>HeaderLevel}" />
                 </OverflowToolbar>
             </headerToolbar>
             <content>
@@ -24,43 +24,43 @@
                     justifyContent="SpaceAround">
                     <VBox width="600px">
                         <HBox>
-                            <Title text="Sale order No: " />
+                            <Title text="{i18n>SaleOrderNo}:" />
                             <Text
                                 text="{customSalesOrderLineItemSet>/SalesOrderSet/SalesOrderID}" />
                         </HBox>
                         <HBox>
-                            <Title text="Customer: " />
+                            <Title text="{i18n>Customer}: " />
                             <Text
                                 text="{customSalesOrderLineItemSet>/SalesOrderSet/CustomerID} - {customSalesOrderLineItemSet>/SalesOrderSet/CustomerName}" />
                         </HBox>
                         <HBox>
-                            <Title text="Gross Amount: " />
+                            <Title text="{i18n>GrossAmount}:" />
                             <Text
                                 text="{customSalesOrderLineItemSet>/SalesOrderSet/GrossAmount}" />
                         </HBox>
                         <HBox>
-                            <Title text="Net Amount: " />
+                            <Title text="{i18n>NetAmount}:" />
                             <Text
                                 text="{customSalesOrderLineItemSet>/SalesOrderSet/NetAmount}" />
                         </HBox>
                     </VBox>
                     <VBox width="600px" class="sapUiMediumMarginBeginEnd">
                         <HBox>
-                            <Title text="Tax Amount: " />
+                            <Title text="{i18n>TaxAmount}" />
                             <Text text="{customSalesOrderLineItemSet>/SalesOrderSet/TaxAmount}" />
                         </HBox>
                         <HBox>
-                            <Title text="Billing Status: " />
+                            <Title text="{i18n>BillingStatus}:" />
                             <Text
                                 text="{customSalesOrderLineItemSet>/SalesOrderSet/BillingStatusDescription}" />
                         </HBox>
                         <HBox>
-                            <Title text="Delivery Status: " />
+                            <Title text="{i18n>DeliveryStatus}" />
                             <Text
                                 text="{customSalesOrderLineItemSet>/SalesOrderSet/DeliveryStatusDescription}" />
                         </HBox>
                         <HBox>
-                            <Title text="Note: " />
+                            <Title text="{i18n>Note}: " />
                             <Text text="{customSalesOrderLineItemSet>/SalesOrderSet/Note}" />
                         </HBox>
 
@@ -78,7 +78,7 @@
         >
             <headerToolbar>
                 <OverflowToolbar>
-                    <Title text="Business Parner Detail" />
+                    <Title text="{i18n>BusinessParnerDetail}" />
                 </OverflowToolbar>
             </headerToolbar>
             <content>
@@ -87,29 +87,29 @@
                     justifyContent="SpaceAround">
                     <VBox width="600px">
                         <HBox>
-                            <Title text="Business Partner ID: " />
+                            <Title text="{i18n>BusinessPartnerID}:" />
                             <Text
                                 text="{customSalesOrderLineItemSet>/ToBusinessPartner/BusinessPartnerID}" />
                         </HBox>
                         <HBox>
-                            <Title text="Company Name: " />
+                            <Title text="{i18n>CompanyName}: " />
                             <Text
                                 text="{customSalesOrderLineItemSet>/ToBusinessPartner/CompanyName}" />
                         </HBox>
                         <HBox>
-                            <Title text="Email Address: " />
+                            <Title text="{i18n>EmailAddress}: " />
                             <Text
                                 text="{customSalesOrderLineItemSet>/ToBusinessPartner/EmailAddress}" />
                         </HBox>
                         <HBox>
-                            <Title text="Phone Number:" />
+                            <Title text="{i18n>PhoneNumber}" />
                             <Text
                                 text="{customSalesOrderLineItemSet>/ToBusinessPartner/PhoneNumber}" />
                         </HBox>
                     </VBox>
                     <VBox width="600px" class="sapUiMediumMarginBeginEnd">
                         <HBox class='sapUiMediumMargin'>
-                            <Title text="Address: " />
+                            <Title text="{i18n>Address}: " />
                             <Text
                                 text="{customSalesOrderLineItemSet>/ToBusinessPartner/Address/Street}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/City}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/Country}" />
                         </HBox>
@@ -122,9 +122,9 @@
         <VBox fitContainer="true">
             <OverflowToolbar class="sapFDynamicPageAlignContent">
                 <ToolbarSpacer />
-                <SearchField search=".onSearch" placeholder="Search by product ID"
+                <SearchField search=".onSearch" placeholder="{i18n>SearchByProductID}"
                     width="17.5rem" />
-                <OverflowToolbarButton icon="sap-icon://sort" text="Sort by item position"
+                <OverflowToolbarButton icon="sap-icon://sort" text="{i18n>SortByItemPosition}"
                     type="Transparent"
                     press=".onSort" />
             </OverflowToolbar>
@@ -142,28 +142,28 @@
                 width="auto">
                 <columns>
                     <Column id="product" width="12em">
-                        <Text text="ItemPosition" />
+                        <Text text="{i18n>ItemPosition}" />
                     </Column>
                     <Column width="14em" minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Product" />
+                        <Text text="{i18n>Product}" />
                     </Column>
                     <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                        <Text text="DeliveryDate" />
+                        <Text text="{i18n>DeliveryDate}" />
                     </Column>
                     <Column width="auto" minScreenWidth="Phone" demandPopin="true" hAlign="End">
-                        <Text text="Quantity" />
+                        <Text text="{i18n>Quantity}" />
                     </Column>
                     <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                        <Text text="GrossAmount" />
+                        <Text text="{i18n>GrossAmount}" />
                     </Column>
                     <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                        <Text text="NetAmount" />
+                        <Text text="{i18n>NetAmount}" />
                     </Column>
                     <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                        <Text text="TaxAmount" />
+                        <Text text="{i18n>TaxAmount}" />
                     </Column>
                     <Column width="auto" minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
-                        <Text text="CurrencyCode" />
+                        <Text text="{i18n>CurrencyCode}" />
                     </Column>
                 </columns>
                 <items>
@@ -194,12 +194,12 @@
 
             <VBox class="sapUiMediumMarginBeginEnd sapUiSmallMarginTopBottom">
                 <HBox>
-                    <Title text="ProductID: " />
+                    <Title text="{i18n>ProductID}: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/ProductID}" />
                 </HBox>
                 <HBox>
-                    <Title text="TypeCode: " />
+                    <Title text="{i18n>TypeCode}: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/TypeCode}" />
                 </HBox>
@@ -214,7 +214,7 @@
                         text="{customSalesOrderLineItemSet>/ProductDetail/Name}" />
                 </HBox>
                 <HBox>
-                    <Title text="NameLanguage: " />
+                    <Title text="{i18n>NameLanguage}: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/NameLanguage}" />
                 </HBox>
@@ -224,42 +224,42 @@
                         text="{customSalesOrderLineItemSet>/ProductDetail/Description}" />
                 </HBox>
                 <HBox>
-                    <Title text="DescriptionLanguage: " />
+                    <Title text="{i18n>DescriptionLanguage}: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/DescriptionLanguage}" />
                 </HBox>
                 <HBox>
-                    <Title text="SupplierID: " />
+                    <Title text="{i18n>SupplierID}: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/SupplierID}" />
                 </HBox>
                 <HBox>
-                    <Title text="SupplierName: " />
+                    <Title text="{i18n>SupplierName}: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/SupplierName}" />
                 </HBox>
                 <HBox>
-                    <Title text="TaxTarifCode: " />
+                    <Title text="{i18n>TaxTarifCode}: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/TaxTarifCode}" />
                 </HBox>
                 <HBox>
-                    <Title text="MeasureUnit: " />
+                    <Title text="Measure Unit: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/MeasureUnit}" />
                 </HBox>
                 <HBox>
-                    <Title text="WeightMeasure: " />
+                    <Title text="Weight Measure: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/WeightMeasure}" />
                 </HBox>
                 <HBox>
-                    <Title text="WeightUnit: " />
+                    <Title text="Weight Unit: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/WeightUnit}" />
                 </HBox>
                 <HBox>
-                    <Title text="CurrencyCode: " />
+                    <Title text="Currency Code: " />
                     <Text
                         text="{customSalesOrderLineItemSet>/ProductDetail/CurrencyCode}" />
                 </HBox>
@@ -289,13 +289,13 @@
                         text="{customSalesOrderLineItemSet>/ProductDetail/DimUnit}" />
                 </HBox>
                 <HBox>
-                    <Title text="CreatedAt: " />
+                    <Title text="Create dAt: " />
                     <Text
                         text="{path: 'customSalesOrderLineItemSet>/ProductDetail/CreatedAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"
                     />
                 </HBox>
                 <HBox>
-                    <Title text="ChangedAt: " />
+                    <Title text="Changed At: " />
                     <Text
                         text="{path: 'customSalesOrderLineItemSet>/ProductDetail/ChangedAt', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"
                     />
@@ -313,13 +313,12 @@
         <semantic:customFooterContent>
             <Button type="Success" text="Confirms Sale Order"
                 enabled="{customSalesOrderLineItemSet>/isEnableButton/confirm}" />
-            <Button type="Emphasized" text="Goods Issue Created"
+            <Button type="Emphasized" text="Goods Issue Created" icon="sap-icon://action"
                 enabled="{customSalesOrderLineItemSet>/isEnableButton/issue}" />
-            <Button type="Emphasized" text="SO invoice Created" icon="sap-icon://"
+            <Button type="Emphasized" text="SO invoice Created" icon="sap-icon://action"
                 enabled="{customSalesOrderLineItemSet>/isEnableButton/invoice}" />
             <Button type="Reject" text="Cancel" icon="sap-icon://cancel"
                 enabled="{customSalesOrderLineItemSet>/isEnableButton/cancel}" />
-            <OverflowToolbarButton icon="sap-icon://settings" text="Settings" press="onPress" />
         </semantic:customFooterContent>
 
     </semantic:FullscreenPage>

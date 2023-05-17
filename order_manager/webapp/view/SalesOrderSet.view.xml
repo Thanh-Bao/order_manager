@@ -14,7 +14,7 @@
                 alignItems="Center"
                 justifyContent="Center">
                 <Text
-                    text="Search and filter by:  "
+                    text="{i18n>searchAndFilterBy}"
                     class="sapUiSmallMarginEnd"
                 />
 
@@ -33,14 +33,14 @@
                 />
 
                 <Button
-                    text="apply"
+                    text="{i18n>apply}"
                     icon="sap-icon://search"
                     type="Emphasized"
                     press=".applySearch"
                     class="sapUiSmallMarginBegin" />
                 <Button
                     press=".resetTable"
-                    text="reset table"
+                    text="{i18n>resetTable}"
                     icon="sap-icon://reset"
                     type="Transparent"
                     class="sapUiSmallMarginBegin" />
@@ -71,28 +71,28 @@
                             }">
                     <columns>
                         <Column id="product" width="12em">
-                            <Text text="SalesOrderID" />
+                            <Text text="{i18n>SalesOrderID}" />
                         </Column>
                         <Column width="auto" minScreenWidth="Tablet" demandPopin="true">
-                            <Text text="Customer" />
+                            <Text text="{i18n>Customer}" />
                         </Column>
                         <Column width="8em" minScreenWidth="Tablet" demandPopin="true" hAlign="End">
-                            <Text text="GrossAmount" />
+                            <Text text="{i18n>GrossAmount}" />
                         </Column>
                         <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
                             hAlign="End">
-                            <Text text="NetAmount" />
+                            <Text text="{i18n>NetAmount}" />
                         </Column>
                         <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
                             hAlign="End">
-                            <Text text="TaxAmount" />
+                            <Text text="{i18n>TaxAmount}" />
                         </Column>
                         <Column width="8em" minScreenWidth="Tablet" demandPopin="true"
                             hAlign="Center">
-                            <Text text="BillingStatus" />
+                            <Text text="{i18n>BillingStatus}" />
                         </Column>
                         <Column width="8em" hAlign="Center">
-                            <Text text="DeliveryStatus" />
+                            <Text text="{i18n>DeliveryStatus}" />
                         </Column>
                     </columns>
                     <items>
@@ -164,7 +164,7 @@
                     <core:Item text="3000" />
                     <core:Item text="5000" />
                 </Select>
-                <Text text="lines" />
+                <Text text="{i18n>lines}" />
             </FlexBox>
         </Panel>
     </Page>

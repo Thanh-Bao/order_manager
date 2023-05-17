@@ -113,6 +113,10 @@
                             <Text
                                 text="{customSalesOrderLineItemSet>/ToBusinessPartner/Address/Street}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/City}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/Country}" />
                         </HBox>
+                        <HBox class='sapUiMediumMargin'>
+                            <Button text="open Map in new windows" type="Transparent"
+                                press=".openMapInNewTab(${customSalesOrderLineItemSet>/ToBusinessPartner/Address})" />
+                        </HBox>
                     </VBox>
                 </FlexBox>
             </content>

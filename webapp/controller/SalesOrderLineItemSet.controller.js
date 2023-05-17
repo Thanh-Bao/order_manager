@@ -127,6 +127,9 @@ sap.ui.define([
         dialogProductDetailClose: function () {
             this.getView().byId("dialogProductInfo").close();
 
+        },
+        openMapInNewTab: function (Address) {
+            window.open(`https://www.google.com/maps/search/${Address.Street},${Address.City},${Address.Country}`, '_blank', 'location=yes,height=570,width=1000,scrollbars=yes,status=yes');
         }
     });
 });

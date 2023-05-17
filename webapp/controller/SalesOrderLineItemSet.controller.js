@@ -128,8 +128,103 @@ sap.ui.define([
             this.getView().byId("dialogProductInfo").close();
 
         },
-        openMapInNewTab: function (Address) {
+        openMapInNewWindows: function (Address) {
             window.open(`https://www.google.com/maps/search/${Address.Street},${Address.City},${Address.Country}`, '_blank', 'location=yes,height=570,width=1000,scrollbars=yes,status=yes');
+        },
+        openMapInNewTab: function (Address) {
+            var sAddress = `${Address.Street},${Address.City},${Address.Country}`;
+            var sApiKey = "AIzaSyCHu1KtJDdEnvE069-OQk_ytOuGuySUESo";
+
+
+
+            // Load the Google Maps API script
+            var script = document.createElement("script");
+            script.src = "https://maps.googleapis.com/maps/api/js?key=" + sApiKey + "&libraries=places";
+            script.onload = function () {
+                // Create the dialog
+                var oDialog = new sap.m.Dialog({
+                    title: "Business Partner Location",
+                    contentWidth: "800px",
+                    contentHeight: "600px",
+                    verticalScrolling: false,
+                    horizontalScrolling: false,
+                    content: [
+                        new sap.ui.core.HTML({
+                            content: "<div id='mapCanvas' style='width: 100%; height: 100%;'></div>"
+                        })
+                    ],
+                    endButton: new sap.m.Button({
+                        text: "Close",
+                        press: function () {
+                            oDialog.close();
+                        }
+                    }),
+                    afterOpen: function () {
+                        // Geocode the address and display the map
+                        geocodeAddress(sAddress);
+                    }
+                });
+
+
+
+                // Open the dialog
+                oDialog.open();
+            };
+
+
+
+            // Append the script to the document
+            document.head.appendChild(script);
+
+
+
+            // Geocode address and display map
+            function geocodeAddress(address) {
+                // Create a geocoder instance
+                var geocoder = new google.maps.Geocoder();
+
+
+
+                // Geocode the address
+                geocoder.geocode({ address: address }, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
+                        var latitude = results[0].geometry.location.lat();
+                        var longitude = results[0].geometry.location.lng();
+
+
+
+                        // Display the map
+                        displayMap(latitude, longitude);
+                    } else {
+                        // Handle geocoding errors
+                        console.error("Geocoding failed. Status: " + status);
+                    }
+                });
+            }
+
+
+
+            // Display the map with the given coordinates
+            function displayMap(latitude, longitude) {
+                var mapCanvas = document.getElementById("mapCanvas");
+
+
+
+                // Create a map instance
+                var map = new google.maps.Map(mapCanvas, {
+                    center: { lat: latitude, lng: longitude },
+                    zoom: 15
+                });
+
+
+
+                // Create a marker at the business partner location
+                var marker = new google.maps.Marker({
+                    position: { lat: latitude, lng: longitude },
+                    map: map,
+                    title: "Business Partner Location"
+                });
+            }
         }
     });
 });

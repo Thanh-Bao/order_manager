@@ -114,7 +114,8 @@
                                 text="{customSalesOrderLineItemSet>/ToBusinessPartner/Address/Street}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/City}, {customSalesOrderLineItemSet>/ToBusinessPartner/Address/Country}" />
                         </HBox>
                         <HBox class='sapUiMediumMargin'>
-                            <Button text="open Map in new windows" type="Transparent"
+                            <Button text="open Map in new windows" type="Reject"
+                                icon="sap-icon://map"
                                 press=".openMapInNewTab(${customSalesOrderLineItemSet>/ToBusinessPartner/Address})" />
                         </HBox>
                     </VBox>

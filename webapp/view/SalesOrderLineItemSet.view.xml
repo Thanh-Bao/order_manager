@@ -189,8 +189,7 @@
             </Table>
         </VBox>
 
-        <Dialog id="dialogProductInfo" draggable="true" title="Product detail">
-
+        <Dialog id="dialogProductInfo" draggable="true" title="{i18n>productDetail}">
 
             <VBox class="sapUiMediumMarginBeginEnd sapUiSmallMarginTopBottom">
                 <HBox>

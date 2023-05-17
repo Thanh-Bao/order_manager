@@ -111,8 +111,8 @@ sap.ui.define([
             oBinding.sort(oSorter);
         },
         onListItemPress: function (ProductID) {
-            console.log(ProductID)
             const oView = this.getView();
+            oView.getModel('customSalesOrderLineItemSet').setProperty(`/ProductDetail`, null);
             oView.byId("dialogProductInfo").open();
             oView.getModel().read(`/ProductSet('${ProductID}')`, {
 

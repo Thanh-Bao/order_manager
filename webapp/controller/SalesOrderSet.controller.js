@@ -210,11 +210,13 @@ sap.ui.define([
                 const oTable = oView.byId("tbSalesOrderSet");
                 const oSalesOrderSet = oView.getModel('customSalesOrderSet');
                 const aTokens = oView.byId("multiInputSearch").getTokens();
-
+                console.log(aTokens)
                 if (aTokens.length === 0) {
                     MessageBox.information("please enter filter condition");
                     return;
                 }
+
+                console.log("aTokens:", aTokens)
 
                 //Create Filter
                 const aFilters = aTokens.map(function (oToken) {

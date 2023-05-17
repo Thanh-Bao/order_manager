@@ -3,9 +3,10 @@
     displayBlock="true"
     height="100%"
     xmlns="sap.m"
+    xmlns:semantic="sap.m.semantic"
     xmlns:mvc="sap.ui.core.mvc">
 
-    <Page>
+    <semantic:FullscreenPage>
         <Panel
             width="98%"
             class="sapUiSmallMarginTopBottom sapUiSmallMarginBeginEnd"
@@ -308,5 +309,18 @@
             </FlexBox>
 
         </Dialog>
-    </Page>
+
+        <semantic:customFooterContent>
+            <Button type="Success" text="Confirms Sale Order"
+                enabled="{customSalesOrderLineItemSet>/isEnableButton/confirm}" />
+            <Button type="Emphasized" text="Goods Issue Created"
+                enabled="{customSalesOrderLineItemSet>/isEnableButton/issue}" />
+            <Button type="Emphasized" text="SO invoice Created" icon="sap-icon://"
+                enabled="{customSalesOrderLineItemSet>/isEnableButton/invoice}" />
+            <Button type="Reject" text="Cancel" icon="sap-icon://cancel"
+                enabled="{customSalesOrderLineItemSet>/isEnableButton/cancel}" />
+            <OverflowToolbarButton icon="sap-icon://settings" text="Settings" press="onPress" />
+        </semantic:customFooterContent>
+
+    </semantic:FullscreenPage>
 </mvc:View>

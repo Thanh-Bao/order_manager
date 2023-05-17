@@ -22,7 +22,13 @@ sap.ui.define([
                 SalesOrderLineItemSet: [],
                 SalesOrderSet: null,
                 ToBusinessPartner: null,
-                ProductDetail: null
+                ProductDetail: null,
+                isEnableButton: {
+                    confirm: false,
+                    issue: false,
+                    invoice: false,
+                    cancel: true
+                }
             });
 
 
@@ -41,6 +47,14 @@ sap.ui.define([
             oModel.read(`/SalesOrderSet('${SalesOrderID}')`, {
                 success: results => {
                     oSalesOrderSet.setProperty(`/SalesOrderSet`, results);
+                    switch (results.DeliveryStatus) {
+                        case 'D':
+                            oSalesOrderSet.setProperty("/isEnableButton/invoice", true);
+                            break;
+
+                        default:
+                            break;
+                    }
                 },
                 error: function () {
                     oSalesOrderSet.setProperty("/SalesOrderSet", null);
